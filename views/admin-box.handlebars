@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Materialize icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+        <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+        <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+        <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+
+        <title>Box</title>
+
+    </head>
+    <body>
+
+        {{> navbar}}    
+
+        <div class="bg"></div>
+
+        <div class="body" style="margin-top: 50px;">
+
+        <div class="row container" style="width: 100%;">
+
+        {{> admin-sidebar}}
+
+        <div class="col s12 m12 l12 blue-grey lighten-5">
+            <form class="row" id="boxnameForm" onsubmit="return false;">
+                <div class="input-field col s6">
+                    <input type="text" name="name" id="boxName" value="{{boxitems.name}}">
+                    <label class="active" for="boxName">Box name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" name="price" id="boxPrice" value="{{boxitems.price}}">
+                    <label class="active" for="boxPrice">Box price</label>
+                </div>
+                <div class="input-field col l12">
+                    <input type="submit" class="btn col l12 teal lighten-1" value="Save">
+                </div>
+            </form>
+            <script>
+                let boxnameForm = document.querySelector("#boxnameForm");
+                boxnameForm.addEventListener('submit',handleBoxNameFormSubmit);
+                async function handleBoxNameFormSubmit(e){
+                    e.preventDefault();
+                    let boxId = {{boxitems.id}};
+                    let formData = $(boxnameForm).serializeArray();
+                    let data = {boxId};
+                    formData.forEach(item=>{
+                        data[item.name] = item.value;
+                    })
+                    let response = await fetch(`/admin/box`, {
+                        method: "PUT",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            Cache: "no-cache"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify(data)
+                    })
+                    response = await response.json()
+
+                }
+            </script>
+            <div class="card-panel teal lighten-1 center" style="position:sticky;top: 0;z-index: 2;padding:5px;font-size:24px;color:#fff">{{boxitems.name}} <span id="price">0$</span></div>
+            <table class="box" >
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Weight</th>
+                        <th></th>
+                        <th>Chance</th>
+                        <th>WeightR</th>
+                        <th></th>
+                        <th>ChanceR</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="row">
+                    {{#each boxitems.boxitems}}
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}$</td>
+                        <td>{{weight}}</td>
+                        <td>
+                            <p class="range-field">
+                                <input id="{{item.id}}" type="range" min="0" max="2000" value="{{weight}}"/>
+                            </p>
+                        </td>
+                        <td></td>
+                        <td>{{weightr}}</td>
+                        <td>
+                            <p class="range-field">
+                                <input id="{{item.id}}" type="range" min="0" max="2000" value="{{weightr}}"/>
+                            </p>
+                        </td>
+                        <td></td>
+                        <td style="width: 150px;">
+                            <button class="btn" id='{{item.id}}'>
+                            <i class="material-icons right">close</i>Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    <tr class="bottom col s12 m12 l12">
+                        <td>
+                            <button data-target="modal1" class="btn modal-trigger ">Add item</button>
+                        </td>
+                        <td>
+                            <span class="width: 100px;"></span>
+                        </td>
+                        <td>
+                            <a href="/admin/" class="btn btn-flat red lighten-1">Back</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-flat teal lighten-1" >Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="modal1" class="modal">
+            <div class="modal-content" style="position: relative;">
+                <div class="row cyan" style="position: sticky; top: 0;">
+                    <p class="col s4 m4 l4 " >Name</p>
+                    <p class="col s4 m4 l4 " >Price</p>
+                    <p class="col s4 m4 l4 center" >Action</p>
+                </div>
+                {{#each allItems}}
+                <div class="row">
+                    <div class="col s4 m4 l4">{{name}}</div>
+                    <div class="col s4 m4 l4">{{price}}$</div>
+                    <button class="btn col s4 m4 l4" id="{{id}}">
+                    <i class="material-icons right">add</i>Add
+                    </button>                    
+                </div>
+                {{/each}}
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat col s12 m12 l12red lighten-2">Close</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            var items = [];
+            const boxID = {{boxitems.id}}
+            document.addEventListener("DOMContentLoaded", function() {
+                var elems = document.querySelectorAll(".modal");
+                var instances = M.Modal.init(elems, {});
+
+                addBtns = [
+                ...document.querySelectorAll("#modal1 .modal-content .row button.col")
+                ];
+                addBtns.forEach(btn => btn.addEventListener("click", addItemToBox));
+
+                document.querySelectorAll("table tbody tr:not(.bottom)").forEach(item => {
+                    let row = {
+                        name: item.querySelector("td:nth-child(1)"), //.innerText,
+                        price: item.querySelector("td:nth-child(2)"), //.innerText,
+                        weight: item.querySelector("td:nth-child(3)"), //.innerText,
+                        slider: item.querySelector("td:nth-child(4) input"),
+                        chance: item.querySelector("td:nth-child(5)"),
+                        weightr: item.querySelector("td:nth-child(6)"), //.innerText,
+                        sliderr: item.querySelector("td:nth-child(7) input"),
+                        chancer: item.querySelector("td:nth-child(8)"),
+                        delete: item.querySelector("td:nth-child(9) button")
+                    };
+                    row.slider.addEventListener("input", updateItem);
+                    row.sliderr.addEventListener("input", updateItemr);
+                    row.delete.addEventListener("click", deleteItem);
+                    items[
+                    row.name.innerText
+                        .trim()
+                        .toLowerCase()
+                        .replace(/ /gi, "")
+                    ] = row;
+                    return row;
+                });
+                document.querySelectorAll("table tbody tr.bottom").forEach(tr => {
+                    let save = tr.querySelector("td:nth-child(4) button");
+                    save.addEventListener("click", saveALL);
+                });
+
+                function updateItem(e) {
+                    let name = e.target.parentNode.parentNode.parentNode.children[0].innerText
+                    .trim()
+                    .toLowerCase()
+                    .replace(/ /gi, "");
+                    items[name].weight.innerText = e.target.value;
+                    calculate();
+                }
+                function updateItemr(e) {
+                    let name = e.target.parentNode.parentNode.parentNode.children[0].innerText
+                    .trim()
+                    .toLowerCase()
+                    .replace(/ /gi, "");
+                    items[name].weightr.innerText = e.target.value;
+                    calculateR();
+                }
+                function calculate() {
+                    let KEYS = Object.keys(items);
+                    let weights = [];
+                    let weightSum = 0;
+                    let prices = [];
+                    let pricesSum = 0;
+                    let chances = [];
+                    for (let key of KEYS) {
+                        weights[key] = items[key].weight.innerText;
+                        weightSum += items[key].weight.innerText / 1;
+                        prices[key] = items[key].price.innerText;
+                        pricesSum += items[key].price.innerText / 1;
+                    }
+                    for (let key of KEYS) {
+                        chances[key] = Math.round(weights[key] / weightSum * 100 * 100) / 100;
+                        items[key].chance.innerText = chances[key] + "%";
+                    }
+                    let boxPrice = 0;
+                    for (let key of KEYS) {
+                        boxPrice +=
+                            chances[key] * (items[key].price.innerText.trim().slice(0, -1) / 1);
+                    }
+                    document.querySelector("#price").innerText =
+                        Math.round(boxPrice / 100 * 100) / 100 + "$";
+                }
+                function calculateR() {
+                    let KEYS = Object.keys(items);
+                    let weights = [];
+                    let weightSum = 0;
+                    let prices = [];
+                    let pricesSum = 0;
+                    let chances = [];
+                    for (let key of KEYS) {
+                        weights[key] = items[key].weightr.innerText;
+                        weightSum += items[key].weightr.innerText / 1;
+                        prices[key] = items[key].price.innerText;
+                        pricesSum += items[key].price.innerText / 1;
+                    }
+                    for (let key of KEYS) {
+                        chances[key] = Math.round(weights[key] / weightSum * 100 * 100) / 100;
+                        items[key].chancer.innerText = chances[key] + "%";
+                    }
+                }
+                calculate();
+                calculateR();
+                function saveALL(e) {
+                    let KEYS = Object.keys(items);
+                    let weights = { data: [] };
+                    for (let key of KEYS) {
+                        weights.data.push({
+                            id: items[key].slider.id,
+                            value: items[key].slider.value,
+                            valuer: items[key].sliderr.value
+                        });
+                    }
+                    fetch(`/admin/box/${boxID}`, {
+                        method: "PUT",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            Cache: "no-cache"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify(weights)
+                        })
+                    .then(res => {
+                        if (res.ok) {
+                        return res.json();
+                        } else {
+                        }
+                    })
+                    .then(data => {
+                        alert("Updated");
+                    });
+                }
+                function deleteItem(e) {
+                    let x = confirm("Are you sure?");
+                    if (!x) return;
+                    fetch(`/admin/items`, {
+                        method: "DELETE",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            Cache: "no-cache"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({ itemID: e.target.id, boxID })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            return res.json();
+                        } else {
+                        }
+                    })
+                    .then(data => {
+                        e.target.parentNode.parentNode.remove();
+                    });
+                }
+                function addItemToBox(e) {
+                    fetch(`/admin/items`, {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            Cache: "no-cache"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({ itemID: e.target.id, boxID })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            return res.json();
+                        } else {
+                        }
+                    })
+                    .then(data => {
+                        let table = document.querySelector("table tbody");
+                        let newItemData = {
+                            name: e.target.parentNode.children[0].innerText.trim(),
+                            price: e.target.parentNode.children[1].innerText.trim().slice(0, -1),
+                            id: e.target.id
+                        };
+                        let newItemElement = new newItemTemplate(newItemData);
+                        table.insertBefore(
+                            newItemElement,
+                            document.querySelector("table tbody tr:last-child")
+                        );
+                    });
+                }
+                function newItemTemplate(item) {
+                    let template = `
+                        <table>
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.price}$</td>
+                                <td>${item.weight}</td>
+                                <td>
+                                    <p class="range-field">
+                                        <input id="${
+                                            item.id
+                                        }" type="range" min="0" max="2000" value="${
+                                            item.weight
+                                        }"/>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="range-field">
+                                        <input id="${
+                                            item.id
+                                        }" type="range" min="0" max="2000" value="${
+                                            item.weightr
+                                        }"/>
+                                    </p>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <button class="btn" id='${item.id}'>
+                                        <i class="material-icons right">close</i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>`;
+                    let temp = new DOMParser().parseFromString(template, "text/html");
+                    let newI = temp.querySelector("body tr");
+                    let newItem = {
+                        name: newI.querySelector("td:nth-child(1)"), //.innerText,
+                        price: newI.querySelector("td:nth-child(2)"), //.innerText,
+                        weight: newI.querySelector("td:nth-child(3)"), //.innerText,
+                        slider: newI.querySelector("td:nth-child(4) input"),
+                        weightr: newI.querySelector("td:nth-child(5)"), //.innerText,
+                        sliderr: newI.querySelector("td:nth-child(6) input"),
+                        chance: newI.querySelector("td:nth-child(7)"),
+                        delete: newI.querySelector("td:nth-child(8) button")
+                    };
+                    newItem.slider.addEventListener("click", updateItem);
+                    newItem.sliderr.addEventListener("click", updateItemr);
+                    newItem.delete.addEventListener("click", deleteItem);
+                    items[
+                        newItem.name.innerText
+                            .trim()
+                            .toLowerCase()
+                            .replace(/ /gi, "")
+                        ] = newItem;
+                    return newI;
+                }
+            });
+        </script>
+        <!-- Socket.io -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+        <script src="/js/socket.js"></script>
+    </body>
+</html>
+
+

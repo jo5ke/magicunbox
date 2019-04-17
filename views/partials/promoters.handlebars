@@ -1,0 +1,78 @@
+<div id="seenOn">
+    <div class="container row" style="width: 100%;">
+        <div class="row">
+        </div>
+        <div class="row flex">
+            <span style=" font-family: 'Russo One', sans-serif; font-size: 25px; margin-top: 10px;">
+                {{#if promoters}}
+                Famous winners: 
+                {{/if}}
+            </span>
+        </div>
+        <div class="row flex promo-slider">
+            {{#if promoters}}
+            {{#each promoters}}
+            <div style="text-align: center">
+                <img src="{{this.profileImage}}" 
+                    style="border-radius:50%; border: 1px solid #FF0000; height:auto; width:auto; max-height:70px; margin:auto;"
+                >
+                <br>
+                <div style="display: inline;">
+                        <span style=" font-family: 'Russo One', sans-serif; font-size: 22px; display: inherit;">
+                            {{this.name}}
+                        </span>
+                        <i style="display: inherit; font-size:20px; vertical-align: text-bottom;" class="material-icons ">check_circle</i> 
+                </div>
+                <br>
+                <a  href="{{this.youtube}}" style="margin:auto;">
+                    <img src="img/Free-Red-Subscribe-Button-By-AlfredoCreates.png" style="margin: auto">
+                </a>
+            </div>
+            {{/each}}
+            {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $('.promo-slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        pauseOnHover: true,
+        arrows: false,
+        draggable: true,
+        dots: false,
+        infinite: true,
+        speed: 300,
+        responsive: [
+            {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+            }
+            },
+            {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+            },
+            {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
+});
+</script>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="verifyownership"  content="30e9aae674b8f1cd3257f4dd2c585da9" />
+    <title>MagicUnbox</title>
+
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">
+
+</head>
+
+<body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/slick/slick.min.js"></script>
+
+    {{> navbar}}
+
+
+    <div id="rect"></div>
+    <div class="bg"></div>
+
+    {{> sidenav}}
+
+    {{> drops}}
+
+    {{> boxes}}
+
+    {{> promoters}}
+
+    {{> footer}}
+
+    <!-- MODALS -->
+
+    {{> payment}}
+
+    {{> login}}
+
+    {{> register}}
+
+    <!-- Compiled and minified JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="/js/modalLogic.js"></script>
+
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script type="text/javascript" src="/slick/slick.min.js"></script>
+    <script src="/js/socket.js"></script>
+
+    <script>
+        M.AutoInit();
+    </script>
+</body>
+</html>

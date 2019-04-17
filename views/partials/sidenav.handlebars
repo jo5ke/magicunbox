@@ -1,0 +1,25 @@
+<ul id="slide-out" class="sidenav">
+    {{#if user}}
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <!--<img src="images/office.jpg"> -->
+            </div>
+            <a href="profile"><img class="circle" src="{{user.profileImage}}"></a>
+            <a href="profile"><span class="name">{{user.username}}</span></a>
+            <a href="#"><span class="email">{{user.email}}</span></a>
+            <a href="#"><span class="email">{{user.balance}} $</span></a>
+        </div>
+    </li>
+    {{/if}}
+
+    {{#if user}}
+    <li><div class="divider"></div></li>
+    <li><a class="waves-effect" href="profile">Profile</a></li>
+    <li><a class="waves-effect" href="#" onclick="openPaymentModal();">Add funds</a></li>
+    <li><a class="waves-effect" href="logout">Logout</a></li>
+    {{else}}
+    <li><a class="waves-effect" onclick="openLoginModal();" >Login</a></li>
+    <li><a class="waves-effect" onclick="openRegisterModal();" >Register</a></li>
+    {{/if}}
+</ul>

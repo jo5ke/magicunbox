@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="verifyownership"  content="30e9aae674b8f1cd3257f4dd2c585da9" />
+
+    <title>Profile</title>
+
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/profile.css">
+
+    <style>
+        .page-footer{
+            position: relative !important;
+            top: 250px !important;
+        }
+        .black-padding-btn{
+            background: #2B2930;
+            padding: 7px;
+            border-radius: 6px;
+            color:white;
+            font-family: Quicksand;
+            font-style: normal;
+            font-weight: bold;
+            line-height: normal;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/slick/slick.min.js"></script>
+
+    {{> navbar}}
+
+    <div id="rect"></div>
+    <div class="bg"></div>
+
+    {{> sidenav}}
+
+    {{> drops}}
+
+
+    <div id="tabs">
+        <div class="container" style="background: #FFF; border-radius: 6px;">
+            <div class="row">
+                <div class="col s12">
+                <ul class="tabs" style="background: #FFF;">
+                    <li class="tab col s3"><a id="generalTab" href="#general">General</a></li>
+                    <li class="tab col s3"><a id="transactionsTab" href="#transactions">Transactions</a></li>
+                    <li class="tab col s3"><a id="itemsTab" href="#items">Items</a></li>
+                    <li class="tab col s3"><a id="affiliateTab" href="#affiliate">Affiliate</a></li>
+                </ul>
+                </div>
+
+                <div id="general" class="col s12">
+                  <form action="/user" method="post">
+                    <div class="row" style="margin-bottom: 0px; margin-top: 20px;">
+                        <div class="col s4">
+
+                            <div class="input-field">
+                                <input placeholder="Your first name" id="name" name="name" type="text" class="validate" value="{{user.name}}">
+                                <label "name">First Name*</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input placeholder="Your last name" id="lastName" name="lastName" type="text" class="validate" value="{{user.lastName}}">
+                                <label for="lastName">Last Name*</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input placeholder="Your phone number" id="phoneNumber" name="phoneNumber" type="text" class="validate" value="{{user.phoneNumber}}">
+                                <label for="phoneNumber">Your phone number*</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <select name="topSize">
+                                    <option value="" disabled selected>Choose your top size</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </select>
+                                <label>Top size*</label>
+                                {{user.topSize}}
+                            </div>
+
+                        </div>
+                        <div class="col s4">
+
+                            <div class="input-field">
+                                <input placeholder="Your country" id="country" name="country" type="text" class="validate" value="{{user.country}}">
+                                <label for="country">Country*</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input placeholder="Your street address" id="address" name="address" type="text" class="validate" value="{{user.address}}">
+                                <label for="address">Street Address*</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input placeholder="Your region" id="region" name="region" type="text" class="validate" value="{{user.region}}">
+                                <label for="region">Region*</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <select name="bottomSize">
+                                    <option value="" disabled selected>Choose your bottom size</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </select>
+                                <label>Bottom size*</label>
+                                {{user.bottomSize}}
+                            </div>
+
+                        </div>
+                        <div class="col s4">
+
+                            <div class="input-field">
+                                <input placeholder="Your city" id="city" name="city" type="text" class="validate" value="{{user.city}}">
+                                <label for="city">City*</label>
+                            </div>
+
+                            <div class="input-field" style="margin-bottom: 0px;">
+                                <input placeholder="Your ZIP code" id="zip" name="zip" type="text" class="validate" value="{{user.zip}}">
+                                <label for="last_name">ZIP code*</label>
+                            </div>
+
+                            <div class="row" style="padding-top:0px; margin-bottom:0px;">
+                                <div class="col s6">
+                                    <div class="input-field">
+                                        <input placeholder="Your building" id="building" name="building" type="text" class="validate" value="{{user.building}}">
+                                        <label for="building">Building (optional)</label>
+                                    </div>
+                                </div>
+                                <div class="col s6">
+                                    <div class="input-field">
+                                        <input placeholder="Your apartment" id="apartment" name="apartment" type="text" class="validate" value="{{user.apartment}}">
+                                        <label for="apartment">Apartment (optional)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <select name="sneakerSize">
+                                    <option value="" disabled selected>Choose your sneaker size</option>
+                                    <option value="6.5">6.5&nbsp; (US) 39.5 (EU)</option>
+                                    <option value="7">7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(US) 40&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="7.5">7.5&nbsp; (US) 40.5 (EU)</option>
+                                    <option value="8">8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(US) 41&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="8.5">8.5&nbsp; (US) 41.5 (EU)</option>
+                                    <option value="9">9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(US) 42&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="9.5">9.5&nbsp; (US) 42.5 (EU)</option>
+                                    <option value="10">10&nbsp;&nbsp;&nbsp;&nbsp;(US) 43&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="10.5">10.5 (US) 43.5 (EU)</option>
+                                    <option value="11">11&nbsp;&nbsp;&nbsp;&nbsp;(US) 44&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="11.5">11.5 (US) 44.5 (EU)</option>
+                                    <option value="12">12&nbsp;&nbsp;&nbsp;&nbsp;(US) 45&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="12.5">12.5 (US) 45.5 (EU)</option>
+                                    <option value="13">13&nbsp;&nbsp;&nbsp;&nbsp;(US) 46&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="13.5">13.5 (US) 46.5 (EU)</option>
+                                    <option value="14">14&nbsp;&nbsp;&nbsp;&nbsp;(US) 47&nbsp;&nbsp;&nbsp; (EU)</option>
+                                    <option value="15">15&nbsp;&nbsp;&nbsp;&nbsp;(US) 48&nbsp;&nbsp;&nbsp; (EU)</option>
+                                </select>
+                                <label>Shoe size*</label>
+                                {{user.sneakerSize}}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row flex">  
+                        <button class="btn waves-effect waves-light" type="submit" name="action">SAVE</button>
+                    </div>
+                  </form>
+
+                </div>
+
+                <div id="transactions" class="col s12">
+                    <table class="highlight responsive-table">
+                        <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {{#each transactions}}
+                        <tr>
+                            <td>{{this.amount}} $</td>
+                            <td>{{formatDate this.updatedAt}}</td>
+                            <td>Deposit</td>
+                        </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="items" class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="tabs">
+                                <li class="tab col s4"><a id="wonTab" href="#won">Won</a></li>
+                                <li class="tab col s4"><a id="soldTab" href="#sold">Sold</a></li>
+                                <li class="tab col s4"><a id="shippedTab" href="#shipped">Shipped</a></li>
+                            </ul>
+                        </div>
+                        <div id="won" class="col s12">
+                            <table class="highlight centered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each items}}
+                                    {{#isWon this}}
+                                    <tr>
+                                        <td>{{this.item.name}}</td>
+                                        <td>{{this.item.price}}</td>
+                                        <td>
+                                            <form style="display: inline;" action="/inventory/{{this.id}}/sell" method="post">
+                                                <button class="btn waves-effect waves-light" type="submit" name="action">SELL</button>
+                                            </form>
+                                            <form style="display: inline;" action="/inventory/{{this.id}}/ship" method="post">
+                                                <button class="btn waves-effect waves-light" type="submit" name="action">SHIP</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {{/isWon}}
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="sold" class="col s12">
+                            <table class="highlight centered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each items}}
+                                    {{#isSold this}}
+                                    <tr>
+                                        <td>{{this.item.name}}</td>
+                                        <td>{{this.item.price}}</td>
+                                        <td>{{formatDate this.updatedAt}}</td>
+                                    </tr>
+                                    {{/isSold}}
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="shipped" class="col s12">
+                            <table class="highlight centered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Tracking code</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each items}}
+                                    {{#isShipped this}}
+                                    <tr>
+                                        <td>{{this.item.name}}</td>
+                                        <td>{{formatDate this.updatedAt}}</td>
+                                        <td>{{fullShippingStatus this.shippingStatus}}</td>
+                                        <td>{{this.trackingCode}}</td>
+                                    </tr>
+                                    {{/isShipped}}
+                                {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="affiliate" class="col s12">
+                    <div class="row"></div>
+                    <div class="row">
+                        <div class="col s3"></div>
+
+                        <form action="/user/code" method="post">
+                            <div class="col s4">
+                                <input placeholder="Your affiliate code" id="code" name="code" type="text" value="{{user.code}}">
+                            </div>
+
+                            <div class="col s2" >
+                                <button class="btn waves-effect waves-light" style="margin-top: 9px; margin-left: 19%;" type="submit" name="action">CHANGE</button>
+                            </div>
+                        </form>
+
+                        <div class="col s3">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s4"></div>
+                        <div class="col s4" style="text-align:center;">
+                            <span class="black-padding-btn">
+                                Level {{affiliate.level}}
+                            </span>
+                        </div>
+                        <div class="col s4"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s3"></div>
+                        <div class="col s6" style="border: 1px solid rgba(0,0,0,0.4); border-radius: 6px;">
+                            <table class="highlight centered" >
+                                <thead>
+                                <tr>
+                                    <th>To next level</th>
+                                    <th>Your percentage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{affiliate.left}} $</td>
+                                        <td>{{affiliate.level}}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col s3"></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 50px;">
+                        <div class="col s3"></div>
+                        <div class="col s6" style="border: 1px solid rgba(0,0,0,0.4); border-radius: 6px;">
+                            <table class="highlight centered">
+                                <thead>
+                                <tr>
+                                    <th>Refferal receive</th>
+                                    <th>Refferal deposited</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>+5% to deposit</td>
+                                        <td>{{affiliate.sum}} $</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col s3"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{> footer}}
+        {{> payment}}
+
+    </div>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        M.AutoInit();
+
+        let tabs = ['general', 'transactions', 'items', 'affiliate', 'won', 'sold', 'shipped']
+        tabs.forEach(tab => {
+            if(window.location.hash.split('#').includes(tab)) 
+                document.getElementById(tab+'Tab').classList.add("active")
+        })
+    </script>
+
+    {{#if error}}
+    <script>
+        M.toast({html: "{{error}}"})
+    </script>
+    {{/if}}
+
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+
+    <!-- Compiled and minified JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="/js/modalLogic.js"></script>
+
+</body>
+</html>

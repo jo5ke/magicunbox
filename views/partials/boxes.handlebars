@@ -1,0 +1,32 @@
+<div class="container" id="boxes">
+    <div class="row flex" >
+        {{#each boxes}}
+        <div class="col ">
+            <div class="card box-card z-depth-0">
+                    <div class="card-image">
+                        <img class="box-zoom" src="img/boxes/{{this.image}}" 
+                            style="
+                                top:-30px;
+                                height:auto;
+                                width:auto;
+                                max-height:240px;
+                                display: block;
+                                margin: 0 auto;
+                                "
+                            >
+                    </div>
+                    <div class="card-content box-card-content">
+                        <span>
+                            {{this.name}}
+                        </span>
+                        <br/>
+                        <span>
+                            {{this.price}} $
+                        </span>
+                    </div>
+                    <a href="boxes/{{this.name}}" class="waves-effect waves-light btn unbox-btn" style="background: linear-gradient(to right, #293544, #1c3c53, #09161f);">UNBOX</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

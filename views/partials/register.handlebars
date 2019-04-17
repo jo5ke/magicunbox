@@ -1,0 +1,148 @@
+<div  class="modal transparent" id="register" >
+    <div class="col s12 z-depth-6 card-panel login-card-panel">
+        <form class="login-form" action="/register" method="POST">
+
+            <a href="#" onclick="closeRegisterModal();">
+                <i class="material-icons">close</i>
+            </a>
+
+            <div class="row" style="margin-bottom: 0;">
+                <h2 style="text-align: center; font-family: 'Quicksand', sans-serif; margin-bottom: 0;">Register</h2>
+            </div>
+            <div class="row" style="margin-bottom: 0;">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">person_outline</i>
+                    <input id="name" name="username" type="text">
+                    <label for="name" data-error="wrong" data-success="right">Username</label>
+                </div>
+            </div>
+            <div class="row hide c-error c-username" style="margin-bottom: 0;">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data"></span>
+                </a>
+            </div>
+            <div class="row" style="margin-bottom: 0;">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mail_outline</i>
+                    <input class="validate" id="emailRegister" name="email" type="email">
+                    <label for="emailRegister" data-error="wrong" data-success="right">Email</label>
+                </div>
+            </div>
+            <div class="row hide c-error c-email" style="margin-bottom: 0;">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data"></span >
+                </a>
+            </div>
+            <div class="row" style="margin-bottom: 0;">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="passwordRegister" name="password"type="password">
+                    <label for="passwordRegister">Password</label>
+                </div>
+            </div>
+            <div class="row hide c-error c-password">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data"></span >
+                </a>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock_outline</i>
+                    <input id="passwordRegister2" name="password2"type="password">
+                    <label for="passwordRegister2">Password</label>
+                </div>
+            </div>
+            <div class="row hide c-error c-password2">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data"></span >
+                </a>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m12 l12">
+                    <label>
+                        <input type="checkbox" name="tc" id="tc"/>
+                        <span>I am over 18 and I accept <a href="/legal">Terms &amp; Conditions</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row hide c-error c-tc" style="margin-top: 25px;margin-bottom:25px;">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data"></span >
+                </a>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button style="color: #FFF;" type="submit" class="btn waves-effect waves-light #29b6f6 light-blue lighten-1 col s12 white-text">
+                        Register
+                    </button>
+                </div>
+            </div>
+            <div class="row center-align">
+                <span>Already registered? <a href="#login" onclick="closeRegisterModal();openLoginModal();" >Log in here</a> or log in using</span>
+            </div>
+            <div class="row" id="sociallogin" style="display: flex; align-items: center; justify-content: center; margin: 0;">
+                <div class="col s3 m3 l3" style="width: auto; margin: 0; padding: 0 10px">
+                    <a href="/login/steam"><img width="62px" height="62px" src="/img/image/steam.png" alt="tw"></a>
+                </div>
+                <div class="col s3 m3 l3" style="width: auto; margin: 0; padding: 0 10px">
+                    <a href="/login/google"><img src="/img/icons/google-plus.png" alt="gp"></a>
+                </div>
+            </div>
+            <input type="hidden" name="procede" value="false">
+        </form>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    let form = document.querySelector("#register .login-form");
+    form.addEventListener('submit',handleSubmit)
+    let errorFields = ['username','email','password','password2',"tc"];
+    async function handleSubmit(e){
+        let formData = $(form).serializeArray();
+        let data = {};
+        formData.forEach(input=>{
+            data[input.name]=input.value;
+        })
+        if(data.procede === 'false'){
+            e.preventDefault();
+        }
+        let response = await fetch("/register",{
+            method:"POST",
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({...data,type:"fetch"})
+        })
+        
+        response = JSON.parse(await response.text());
+        
+        if(response.error){
+            errorFields.forEach(errField=>{
+                document.querySelector(`.c-error.c-${errField}`).classList.add("hide");
+            })
+            response.data.forEach(msg =>{
+                document.querySelector(`.c-error.c-${msg.param} .data`).innerText = msg.msg;
+                document.querySelector(`.c-error.c-${msg.param}`).classList.remove('hide');
+            })
+        }else{
+            form.querySelector("input[type=hidden]").value='true';
+            form.submit();
+            return true;
+        }
+    }
+    document.querySelectorAll(".c-error").forEach(div=>{
+        div.style.marginBottom = "0px";
+    })
+</script>

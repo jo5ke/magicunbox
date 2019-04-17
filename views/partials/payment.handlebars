@@ -1,0 +1,246 @@
+<div  class="modal transparent" style="border:0 !important" id="payment">
+            <div width="100%" class="closeModal" onclick="closePaymentModal();">
+                <i style="color:#20A4F3; font-size:30px;" onhover="cursor:pointer" class="material-icons">cancel</i>
+            </div>
+            
+            <div class="card transparent" style="margin:0">
+            <div class="card-tabs">
+            <ul class="tabs tabs-fixed-width tabs-transparent" style="height: 60px;align-items:flex-end; ">
+                <li class="tab roundTabs" style="max-width: calc(100%  /3)"><a style="border-radius:5px;display:inline-block;padding : 0 !important;" href="#test4"><img id="visaTab" onclick="changePic('visa')" class="tabImages" src="/img/pm/visa_u.png"></a></li>
+                <li class="tab roundTabs" style="margin: 0 2px ;max-width: calc(100%  /3)"><a class="active" style="padding : 0 !important;border-radius:5px;background-color:#fafafa !important" href="#test5"><img id="giftTab" onclick="changePic('gift')" class="tabImages" style="height:160%;margin-top:-13px;margin-left:0px;" src="/img/pm/gift.png"></a></li>
+                <li class="tab roundTabs" style="max-width: calc(100%  /3)"><a style="padding : 0 !important;border-radius:5px" href="#test6"><img id="coinbaseTab" onclick="changePic('coinbase')" class="tabImages" src="/img/pm/coinbase_u.png"></a></li>
+            </ul>
+            </div>
+            <div class="card-content" style="background-color: #fafafa;border-radius: 5px;margin-top:2px; border-radius:5px">
+            <div id="test4" style="text-align: center; display: none;"><div class="greenBox apm"><i style="font-size:30px; color:#8FCF4C">Curently Not Available!</i></div></div>
+            <div id="test5" style="text-align: center;">
+                <span class="apm">AVAILABLE PAYMENT METHODS:</span>
+                <img src="/img/pm/av_cards.png" width="100%" alt="payment-card">
+                <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 20px; height:36px; ">
+                    <input class="browser-default valueInput" style="text-align:center;font-size:17px;width:140px;"  id="gift-code" placeholder="Enter code..." type="text">
+                    <button style="outline:0;display:inline; width: 142px;padding:0;background-image: url('img/pm/redeem2.png');" class="onHover" onclick="redeemGift()" id="btn-cards"></button>
+                </div>
+                <div class="row s12" style="margin-top: 30px;">
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-5-usd">
+                            <img src="/img/pm/gc5.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb5.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-10-usd">
+                            <img src="/img/pm/gc10.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb10.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-25-usd">
+                            <img src="/img/pm/gc25.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb25.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                </div>
+                <div class="row s12"> 
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-50-usd">
+                            <img src="/img/pm/gc50.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb50.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-100-usd">
+                            <img src="/img/pm/gc100.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb100.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                    <div class="col s4" style="height: 155px;">
+                        <a target="_blank" href="https://www.gamivo.com/product/magicunbox-gift-card-250-usd">
+                            <img src="/img/pm/gc250.png" width="100%" alt="payment-coninbase">
+                            <img class="zoom" src="/img/pm/gcb250.png" width="80%" alt="payment-coninbase">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="test6" style="text-align: center; display: none;">
+                <span class="apm">AVAILABLE PAYMENT METHODS:</span>
+                <img src="/img/pm/av_coinbase.png" width="60%" alt="payment-coninbase">
+                <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 10px; height:36px;">
+                    <input class="browser-default valueInput" style="text-align:center;font-size:17px;width:140px;" min="5" id="cbs-amount" placeholder="Enter amount..." type="number">
+                    <button style="outline:0;display:inline;width:140px;padding:0;background-image: url('img/pm/coinbase2.png');" class="onHover" onclick="coinbase()" id="btn-cbs" ></button>
+                </div>       
+            </div>
+            </div>
+            </div>
+            </div>
+</div>
+<script>
+openInNewTab = (url) => {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
+let changePic = (element)=>{
+    console.log(element)
+    let visa = document.getElementById('visaTab')
+    let gift = document.getElementById('giftTab')
+    let coinbase = document.getElementById('coinbaseTab')
+    switch(element){
+        case 'visa':
+        visa.src = '/img/pm/visa.png'
+        gift.src = '/img/pm/gift_u.png'
+        coinbase.src = '/img/pm/coinbase_u.png'
+        break;
+        case 'gift':
+        visa.src = '/img/pm/visa_u.png'
+        gift.src = '/img/pm/gift.png'
+        coinbase.src = '/img/pm/coinbase_u.png'
+        break;
+        case 'coinbase':
+        visa.src = '/img/pm/visa_u.png'
+        gift.src = '/img/pm/gift_u.png'
+        coinbase.src = '/img/pm/coinbase.png'
+        break;
+    }
+}
+
+/*let paypal = () => {
+    let amount = document.getElementById("amount").value
+    let code = document.getElementById("code").value
+
+    if(amount && amount >= 5) 
+        openInNewTab(`paypal?amount=${amount}&code=${code}`)
+    else 
+      M.toast({html: 'Minimal deposit is 5$'})
+}*/
+let coinbase = () => {
+    let amount = document.getElementById("cbs-amount").value
+    //let code = document.getElementById("code").value
+    //coinbase?amount=${amount}&code=${code}
+    if(amount && amount >= 5)
+        openInNewTab(`coinbase?amount=${amount}`)
+    else 
+      M.toast({html: 'Minimal deposit is 5$', classes: "rounded red"})
+}
+
+let redeemGift = async () => {
+    let amount = document.getElementById('gift-code').value
+    if(amount || amount.length < 6){
+        let response = await fetch(`/cards/redeem`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Cache: "no-cache"
+            },
+            credentials: "include",
+            body: JSON.stringify({code:amount})
+        })
+        let data = await response.json()
+        M.toast({html: data, classes: 'rounded blue'});
+        if(response.status == 200) location.reload();
+    }else M.toast({html: 'Invalid code!', classes: 'rounded red'});
+}
+
+</script>
+
+<style>
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.tabImages {
+    height:200%;
+    background-color: #fafafa !important; 
+    margin-top: -22px;
+}
+
+.zoom:hover {
+    resize:both;
+    width: 90%;
+}
+
+.onHover {
+    background-size: 100% 100%;
+    border:0;
+    font-size:17px;
+    font-weight: 650;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    height: 100%;
+}
+
+.onHover:hover{
+    -moz-box-shadow: 0 0 25px #26C0FF;
+    -webkit-box-shadow: 0 0 25px #26C0FF;
+    box-shadow: 0 0 25px #26C0FF;
+}
+
+
+.greenBox {
+    margin: auto auto;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    border: 3px #8FCF4C solid;
+}
+
+.roundTabs {
+    background-color: #fafafa;
+    border-radius: 5px;
+}
+
+.tabs .tab a:focus.active {
+    background-color: #f80e0e !important;
+}
+
+#btn-cbs:focus, #btn-cards:focus {
+  outline: none;
+  background-color: #051E2F;
+}
+
+.closeModal{
+    text-align:right;
+    vertical-align:text-bottom;
+    line-height: 100%;
+}
+
+.closeModal i:hover{
+    cursor:pointer;
+}
+
+.valueInput {
+    display:inline;
+    text-align: right;
+    outline: none;
+    width: 120px;
+    padding: 0;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
+}
+.apm{
+    font-family: Russo One;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 20px;           
+}
+#payment{
+        width:700px !important
+}
+.tabs .indicator {
+    background-color: #20A4F3 !important;
+}
+
+.tabs .tab a:focus.active {
+    background-color:rgb(255, 255, 255) !important;
+}
+
+.modal, .card {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+</style>

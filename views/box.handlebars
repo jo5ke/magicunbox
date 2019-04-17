@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="verifyownership"  content="30e9aae674b8f1cd3257f4dd2c585da9" />
+
+    <title>{{box.name}}</title>
+
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+
+    <link rel="stylesheet" href="/css/spinner.css">
+
+</head>
+
+<body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/slick/slick.min.js"></script>
+
+    {{> navbar}}
+
+    <div id="rect"></div>
+    <div class="bg"></div>
+
+    {{> sidenav}}
+
+    {{> drops}}
+
+    <div class="body">
+        <div id="main">
+            <div class="row1">
+                <div class="box">
+                    <img src="/img/boxes/{{box.image}}" alt="xx">
+                    <div class="data">
+                        <p class="title">{{box.name}}</p>
+                        <p class="price">{{box.price}}$</p>
+                    </div>
+                </div>  
+            </div>
+
+            <div class="row2">
+                <div class="wrap">
+                    <div class="spinner">
+
+                    </div>
+                </div>
+                <span class="area"></span>
+                <span class="line"></span>
+                <button class="open">UNBOX</button>
+            </div>
+
+            <div id="items">
+                <p id="title">Items you can win</p>
+                <div class="row flex">
+                    {{#each items}}
+                        {{> item }}
+                    {{/each}}
+                </div>
+            </div>
+    </div>
+
+    {{> login}}
+
+    {{> register}}
+
+    {{> footer}}
+
+    {{> iteminfo}}
+
+{{#unless user}}
+<script>
+    let unboxButton = document.querySelector('#main .row2 button.open');
+    unboxButton.addEventListener('click', () => { openLoginModal() })
+
+</script>
+{{/unless}}
+
+<script>
+    let openModal = (name,price,image,desc)=>{
+        let boxName = window.location.href.split('boxes/')[1].replace("%20", " ")
+        let imageDiv = document.getElementById('iiImage')
+        imageDiv.src = image
+        document.getElementById('iiName').innerText = name
+        document.getElementById('iiBox').innerText = boxName
+        document.getElementById('iiDesc').innerText = desc
+        openiteminfoModal()
+    }
+    let convert = (name)=>{
+        return String(name)
+    }
+(async () => {
+    function newSpinItem(item) {
+        let content = 
+            `<div class="item">
+                <img src="${item.image}" alt="${item.name}"/>
+            </div>`
+        let object = new DOMParser().parseFromString(content,'text/html');
+        let newItem = object.querySelector('body div');
+        return newItem;
+    }
+
+    let singleItemWidth = 150;
+    let boxImage = document.querySelector('#main .row1 .box img');
+    let boxName = document.querySelector('#main .row1 .box .data .title');
+    let boxPrice = document.querySelector('#main .row1 .box .data .price');
+    let spinner =  document.querySelector('#main .row2 .wrap .spinner');
+    let line = document.querySelector('#main .row2 span.line');
+    let unboxButton = document.querySelector('#main .row2 button.open');
+    let mayWin = document.querySelector("#main .row3 div.items");
+
+    let balance = document.getElementById("balance")
+    let items;
+    let box;
+
+    {{#if box}}
+        items =  {{{toJSON items}}}
+        box = {{{toJSON box}}}
+        {{#if user}}
+            unboxButton.addEventListener('click', unbox)
+        {{/if}}
+    {{/if}}
+
+    let allItems=[];
+    while(allItems.length<150){
+        allItems.push(...items);
+    }
+    allItems=allItems.slice(0,150);
+    
+    let generateItems = shuffle(allItems);
+    for(let i of items){
+        generateItems.push(...items);
+    }
+    for(let i of generateItems){
+        spinner.appendChild(newSpinItem(i));
+    }
+
+    let maxItems = items.length
+    generateItems = generateItems.length;
+    let path = (Math.round(generateItems*0.7)) * singleItemWidth;
+    let itemsWidth = `${generateItems * singleItemWidth}px`;
+
+    function unbox(e) {
+        unboxButton.removeEventListener("click", unbox);
+        unboxButton.setAttribute("disabled",'true');
+        fetch(`/boxes/${box.id}/open`,{  
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Cache': 'no-cache'
+            },
+            credentials: 'include'
+        })
+        .then(res => {
+            if(res.ok) {
+                res.json()
+                    .then(res => {
+                        winIt = res.data.item
+                        winIt.image = '/img/items/'+winIt.image
+                        spin(winIt, res.data.dropId)
+                        balance.innerText = parseFloat(balance.innerText.split(' ')[0]) - parseFloat(res.data.boxPrice)
+                        balance.innerHTML += ' $'
+                    })
+            } else {
+                res.json()
+                    .then(err => {
+                        M.toast({html: 'You dont have enough money'})
+                    })
+            }
+        })
+        .catch(err => {
+        });
+    }
+
+    function spin(winIt, dropId){
+        {{#if user}}
+            spinner.removeAttribute("style");
+            spinner.style.width = itemsWidth;
+            let loff = line.offsetLeft;
+            let num = Math.floor((loff + path) / singleItemWidth);
+            
+            let item = new newSpinItem(winIt);
+            spinner.insertBefore(item, spinner.children[num]);
+            spinner.children[num + 1].remove();
+
+            let currentOffset = spinner.children[parseInt(loff/singleItemWidth)].offsetLeft;
+            let itemOffset = item.offsetLeft;
+
+            let duration = Date.now()%7+10;
+            let animation = `translate(-${path + (singleItemWidth/2 - (loff - currentOffset))}px)`;
+            let transition = `transform ${duration}s cubic-bezier(.19,.59,.03,.99)`;
+
+            spinner.style.transition = transition;
+            spinner.style.transform = animation;
+
+            setTimeout(() => {
+                showPopUp(winIt,unboxButton, dropId, winIt.price);
+            }, duration * 1000);
+        {{/if}}
+        {{#unless user}}
+            alert("Pease log in")
+        {{/unless}}
+    }
+
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    }
+
+
+
+    function showPopUp(item, spinButton, dropId, price){
+        let content =  `
+        <div id="winpopup">
+            <p class="title">You unboxed</p>
+            <img src="${item.image}" alt="${item.name}" class="item" onload="this.style.left='calc( 50% - '+ (this.offsetWidth/2) +'px )';this.style.top='calc( 35% - '+ (this.offsetHeight/2) +'px )'">
+            <p class="name">${item.name}</p>
+            <p class="price">${item.price}$</p>
+            <div class="dugmeta">
+                <button class="sell">SELL ITEM</button>
+                <button class="again">UNBOX AGAIN</button>
+            </div>
+        </div>  `;
+        let popup = new DOMParser().parseFromString(content,'text/html').querySelector('body #winpopup');
+
+        popup.querySelector('button.sell').addEventListener('click',(e) => {
+            fetch(`/inventory/${dropId}/sell`,{  
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'include'
+            })
+
+            spinButton.addEventListener("click", unbox);
+            spinButton.removeAttribute('disabled')
+            balance.innerText = parseFloat(balance.innerText.split(' ')[0]) + parseFloat(price)
+            balance.innerHTML += ' $'
+            popup.remove();
+        });
+
+        popup.querySelector('button.again').addEventListener('click',(e)=>{
+            spinButton.addEventListener("click", unbox);
+            spinButton.removeAttribute('disabled')
+            popup.remove();
+        });
+        document.body.appendChild(popup);
+    }
+    })();
+
+</script>
+
+    <!-- Compiled and minified JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        M.AutoInit();
+    </script>
+
+    <script src="/js/modalLogic.js"></script>
+
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script type="text/javascript" src="/slick/slick.min.js"></script>
+    <script src="/js/socket.js"></script>
+</body>
+</html>

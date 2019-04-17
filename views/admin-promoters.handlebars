@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+</head>
+
+<body>
+    {{> navbar}}    
+
+    <div class="bg"></div>
+
+    <div class="body" style="margin-top:50px;">
+
+        <div class="row container">
+            
+            {{> admin-sidebar}}
+
+            <div class="col s9 m9 l9 blue-grey lighten-5">
+                <table class="box">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each promoters}}
+                        <tr>
+                            <td><img class="circle" style="width: 50px;height: 50px;"  src="{{profileImage}}" alt="{{name}}"></td>
+                            <td>{{name}}</td>
+                            <td><a href="{{URL}}" taget="_blank">{{URL}}</a></td>
+                            <td>
+                                 <button class="btn deleteBtns" id='{{id}}'>
+                                    <i class="material-icons right">close</i>
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        <tr>
+                            <td colspan="4" class="row">
+                                <a class="waves-effect waves-light btn modal-trigger col s2 m2 l2" href="#modal1">
+                                    <i class="material-icons right">add</i>ADD
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Add new promoter</h4>
+                <form action="/admin/promoters" method="POST" id="newPromoter" class="col s12 m12 l12">
+                    <div class="row">
+                        <span class="col s1 m1 l1"></span>
+                        <div class="input-field col s10">
+                            <input value="" name="name" id="name" type="text" class="validate">
+                            <label class="active" for="name">Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col s1 m1 l1"></span>
+                        <div class="input-field col s10">
+                            <input value="" name="chanel" id="chanel" type="text" class="validate">
+                            <label class="active" for="chanel">Chanel URL</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col s1 m1 l1"></span>
+                        <div class="input-field col s10">
+                            <input value="" name="image" id="image" type="text" class="validate">
+                            <label class="active" for="image">Image URL</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <button type="submit" class="btn col s2 m2 l2" id="submitNew">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+
+            let submitButton = document.querySelector('#submitNew');
+            submitButton.addEventListener('click',submitForm);
+
+            function submitForm(e){
+                document.querySelector('#newPromoter').submit();
+            }
+
+            let deleteBtns = document.querySelectorAll(".deleteBtns").forEach(btn=>{
+                btn.addEventListener('click',deletePromoter);
+            });
+
+            function deletePromoter(e){
+                let id = parseInt(e.target.id);
+                fetch(`/admin/promoters`,{  
+                        method: "DELETE",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Cache': 'no-cache'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({id})
+                    }).then(res=>{
+                        if(res.ok){
+                            e.target.parentNode.parentNode.remove();
+                        }else{
+                        }
+                    })
+            }
+
+        });
+    </script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+</body>
+
+</html>

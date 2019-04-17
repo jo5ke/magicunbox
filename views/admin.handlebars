@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+    
+</head>
+
+<body>
+    {{> navbar}}    
+
+    <div class="bg"></div>
+
+    <div class="body" style="margin-top: 50px;">
+
+        <div class="row container">
+            
+            {{> admin-sidebar}}
+
+            <div class="col s9 m9 l9 blue-grey lighten-5">
+                <table class="box">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Items</th>
+                            <th>Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each boxes}}
+                        <tr>
+                            <td><a href="/admin/box/{{box.name}}">{{box.name}}</a></td>
+                            <td>{{box.price}}$</td>
+                            <td>22</td>
+                            <td>
+                                <p>
+                                    <label>
+                                        <input id="{{box.id}}" type="checkbox" 
+                                            {{#if box.active}}
+                                                checked="checked"
+                                            {{/if}}
+                                         />
+                                        <span></span>
+                                    </label>
+                                </p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <table class="items hide" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>box</th>
+                            <th>Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each boxes}}
+                        <tr>
+                            <td>{{box.name}}</td>
+                            <td>{{box.price}}$</td>
+                            <td>22</td>
+                            <td>
+                                <p>
+                                    <label>
+                                        <input id="{{box.id}}" type="checkbox" checked="{{box.active}}" />
+                                        <span></span>
+                                    </label>
+                                </p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let sliders = document.querySelectorAll("input[type=checkbox]")
+            sliders.forEach(item=>{
+                item.addEventListener('change',toggleBox);
+            })
+            function toggleBox(e){
+                let checkbox = e.target;
+                let id = checkbox.id;
+                let status = checkbox.checked;
+                fetch(`/admin/box/active/${id}`,{  
+                        method: "PUT",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Cache': 'no-cache'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({status})
+                    })
+            }
+
+
+            document.querySelectorAll(".row .collection a").forEach(a => a.addEventListener('click', toggleTable));
+
+            function toggleTable(e) {
+                let id = e.target.innerText.toLowerCase();
+                document.querySelector('.' + id).classList.remove('hide');
+                document.querySelector(`.container table:not(.${id})`).classList.add('hide');
+                document.querySelector(`.container .collection a.active`).classList.remove('active');
+                e.target.classList.add('active');
+            }
+        });
+    </script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+</body>
+
+</html>

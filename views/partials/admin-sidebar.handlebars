@@ -1,0 +1,26 @@
+<div class="collection col s3 m3 l3" id="admin-sidenav">
+    <a href="/admin/items" class="collection-item">Items</a>
+    <a href="/admin/" class="collection-item">Box</a>
+    <a href="/admin/promoters" class="collection-item">Promoters</a>
+    <a href="/admin/shipping?type=requested" class="collection-item">Shipping</a>
+    <a href="/admin/shipping?type=requested" class="collection-item green lighten-5" id="req">
+        <i class="material-icons left">done</i>
+        Requested
+    </a>
+    <a href="/admin/shipping?type=shipped" class="collection-item" id="comp">
+        <i class="material-icons left">done_all</i>
+        Completed
+    </a>
+    <a href="/admin/users" class="collection-item">Users</a>
+</div>
+<script>
+    let sidenav = document.getElementById("admin-sidenav");
+    let sidenavChildrens = [...sidenav.children];
+    console.log(sidenavChildrens);
+    sidenavChildrens.forEach(a=>{
+        if(a.href === window.location.origin + window.location.pathname){
+            a.classList.add('active');
+        }
+    })
+
+</script>

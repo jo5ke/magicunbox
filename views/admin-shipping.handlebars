@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+
+<body>
+
+    {{> navbar}}    
+
+    <div class="bg"></div>
+
+    <div class="body" style="margin-top: 50px;">
+
+        <div class="row container">
+
+            {{> admin-sidebar}}
+            
+            <div class="col s9 m9 l9 blue-grey lighten-5">
+                <table class="box">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Code</th>
+                            <th>Action</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each render}}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{user}}</td>
+                            <td>{{item}}</td>
+                            <td>{{price}}</td>
+                            <td>{{status}}</td>
+                            <td>{{code}}</td>
+                            <td>
+                                 <a class="waves-effect waves-light btn modal-trigger" id='{{id}}' href="#modal1" style="text-align:center">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
+                             <td>
+                                <button data-target="modal2" class="btn modal-trigger" style="text-align: center;"  id='{{id}}'>
+                                    <i class="material-icons">mail</i>
+                                </button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        <tr>
+                            <td colspan="4" class="row">
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row col s12 teal lighten-4" id="totalInfo" style="position: sticky; bottom: 0;padding: 10px;z-index: 100">
+                    <span class="col s4">
+                        Oders: {{{orderCount}}}
+                    </span>
+                    <span class="col s4">
+                        Users: {{{userCount}}}
+                    </span>
+                    <span class="col s4">
+                        Total: {{{moneyCount}}}$
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="col s1"></span>
+                    <a href="{{{prev}}}" class="waves-effect col s1"><i class="material-icons">chevron_left</i></a>
+                    <span class="col s8"></span>
+                    <a href="{{{next}}}" class="waves-effect col s1"><i class="material-icons">chevron_right</i></a>
+                    <span class="col s1"></span>
+                </div>
+            </div>
+        </div>
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Edit order</h4>
+                <form action="/admin/shipping" method="POST" id="shipping" class="col s12 m12 l12">
+                    <input type="hidden" name="id" value="" id="hid">
+                    <div class="row">
+                        <span class="col s3 m3 l3">ID: </span>
+                        <span class="col s9 m9 l9" id="id"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Username: </span>
+                        <span class="col s9 m9 l9" id="username"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Email: </span>
+                        <span class="col s9 m9 l9" id="e-mail"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Phone number: </span>
+                        <span class="col s9 m9 l9" id="phoneNum"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">First name: </span>
+                        <span class="col s9 m9 l9" id="fname"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Last name: </span>
+                        <span class="col s9 m9 l9" id="lname"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Country: </span>
+                        <span class="col s9 m9 l9" id="country"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Region: </span>
+                        <span class="col s9 m9 l9" id="region"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">City: </span>
+                        <span class="col s9 m9 l9" id="city"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Adress: </span>
+                        <span class="col s9 m9 l9" id="address"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Building: </span>
+                        <span class="col s9 m9 l9" id="building"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Apartment: </span>
+                        <span class="col s9 m9 l9" id="apartment"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">ZIP Code: </span>
+                        <span class="col s9 m9 l9" id="zipcode"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Sneakers size: </span>
+                        <span class="col s9 m9 l9" id="sneakers"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Top size: </span>
+                        <span class="col s9 m9 l9" id="topsize"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Bottom size: </span>
+                        <span class="col s9 m9 l9" id="bottomsize"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Item price: </span>
+                        <span class="col s9 m9 l9" id="itemprice"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 m3 l3">Item name: </span>
+                        <span class="col s9 m9 l9" id="itemname"></span>
+                    </div>
+                    <div class="row">
+                        <span class="col s1 m1 l1"></span>
+                        <div class="input-field col s10">
+                            <input value="" name="status" id="status" type="number" min="1" max="2" class="validate" autofocus>
+                            <label class="active" for="status">Status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col s1 m1 l1"></span>
+                        <div class="input-field col s10">
+                            <input value="" name="code" id="code" type="text" class="validate">
+                            <label class="active" for="code">Tracking code</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <button type="submit" class="btn col s2 m2 l2" id="shippingBtn">Save</button>
+            </div>
+        </div>
+    </div>
+     <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h4>Send email</h4>
+                <div class="input-field col s12">
+                    <select onchange="handleTemplateChange(this);">
+                        <option value="invalid" disabled selected>Choose template</option>
+                        <option value="steam-key">Steam key</option>
+                        <option value="item-delivery">Item delivery</option>
+                        <option value="clear">Clear</option>
+                    </select>
+                    <label>Select template</label>
+                </div>
+            <div class="row">
+                <form action="/admin/shipping/email" method="POST" class="col s12" id="email_form">
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="from_email" type="email" class="validate" name="from" value=" ">
+                        <label for="from_email">Sender email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="shipping_subject" type="text" class="validate" name="subject" value=" ">
+                        <label for="shipping_subject">Subject</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="shipping_email" type="email" class="validate" name="email" value=" ">
+                        <label for="shipping_email">Receiver email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="special_field" type="text" class="validate" value=" ">
+                        <label for="special_field">Special field</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" class="materialize-textarea" name="text" value=" "></textarea>
+                            <label for="textarea1">Text</label>
+                        </div>
+                    </div>  
+                    <div class="row red lighten-2" style="display:none">
+                        <p id="shipping_error" class="col s12" style="padding-top: 10px;width: 100%;text-align: center;color:#fff;">Errorrr!!!</p>
+                    </div>
+                </form>
+            </div> 
+        </div>
+        <div class="modal-footer">
+            <a class="waves-effect waves-light btn" onclick="handleEmailSubmit()">
+                <i class="material-icons right">cloud</i>
+                Send email
+            </a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+                elems = document.querySelectorAll('select');
+                instances = M.FormSelect.init(elems);
+            let submitButton = document.querySelector('#shippingBtn');
+            submitButton.addEventListener('click',submitForm);
+
+            function submitForm(e){
+                document.querySelector('#shipping').submit();
+            }
+
+            let usersArray = {{{toJSON users}}};
+            let trigetList = document.querySelectorAll('table a.modal-trigger');
+            trigetList.forEach(btn=>{
+                btn.addEventListener('click',updateModal);
+            })
+            
+            let triger = document.querySelectorAll('table.box tbody tr td button.btn.modal-trigger', false);
+            triger.forEach((btn)=>{
+                btn.addEventListener('click',(e)=>{
+                    let currentUser;
+                    let clicked ;
+                    if(e.target.childElementCount){
+                        clicked = e.target.parentNode.parentNode.children[1].innerText.trim();
+                    }else {
+                        clicked = e.target.parentNode.parentNode.parentNode.children[1].innerText.trim();
+                    }
+                    Object.keys(usersArray).forEach(u=>{
+                        if(usersArray[u].username === clicked){
+                            currentUser = usersArray[u];
+                        }
+                    });
+                    document.querySelector('#modal2 input#shipping_email').value = currentUser.email;
+                })
+            })
+
+            function updateModal(e){
+                let target = e.target;
+                if(target.id===''){
+                    target = target.parentNode;
+                }
+                let id = document.querySelector("#id");
+                let username = document.querySelector('#username');
+                let email = document.querySelector('#e-mail');
+                let phoneNumber = document.querySelector('#phoneNum');
+                let fname = document.querySelector('#fname')
+                let lname = document.querySelector('#lname')
+                let country = document.querySelector('#country')
+                let region = document.querySelector('#region')
+                let city = document.querySelector('#city')
+                let address = document.querySelector('#address')
+                let building = document.querySelector('#building')
+                let apartment = document.querySelector('#apartment')
+                let zipcode = document.querySelector('#zipcode')
+                let sneakers = document.querySelector('#sneakers')
+                let topsize = document.querySelector('#topsize')
+                let bottomsize = document.querySelector('#bottomsize')
+                let price = document.querySelector('#itemprice')
+                let itemname = document.querySelector('#itemname')
+                let status = document.querySelector('#status');
+                let code = document.querySelector("#code");
+                let hid = document.querySelector('#hid');
+
+                let currentUser;
+                Object.keys(usersArray).forEach(u=>{
+                    if(usersArray[u].username === target.parentNode.parentNode.children[1].innerText.trim()){
+                        currentUser = usersArray[u];
+                    }
+                });
+                let info = {
+                    orderId: target.id,
+                    item: target.parentNode.parentNode.children[2].innerText,
+                    price: target.parentNode.parentNode.children[3].innerText,
+                    status: target.parentNode.parentNode.children[4].innerText,
+                    code:  target.parentNode.parentNode.children[5].innerText
+                };
+                info = Object.assign({},info,currentUser);
+                id.innerText = info.orderId;
+                username.innerText = info.username;
+                email.innerText = info.email;
+                phoneNumber.innerText = info.phoneNumber;
+                fname.innerText = info.name;
+                lname.innerText = info.lastName;
+                country.innerText = info.country;
+                region.innerText = info.region;
+                city.innerText = info.city;
+                address.innerText = info.address;
+                building.innerText = info.building;
+                apartment.innerText = info.apartment;
+                zipcode.innerText = info.zip;
+                sneakers.innerText = info.sneakerSize;
+                topsize.innerText = info.topSize;
+                bottomsize.innerText = info.bottomSize;
+                itemname.innerText = info.item;
+                price.innerText = info.price+"$";
+                status.value = info.status==="SHIPPED"?2:1;
+                code.value = info.code;
+                hid.value = info.orderId;
+            }
+        });
+        
+        function handleEmailSubmit(e){
+            let from =  document.getElementById('from_email').value
+            let subject = document.getElementById('shipping_subject').value;
+            let email = document.getElementById('shipping_email').value;
+            let special = document.getElementById('special_field').value;
+            let text = document.getElementById('textarea1').value;
+            text = text.toString().replace(/##special##/ig,special);
+            let data = {
+                from,
+                subject,
+                email,
+                text
+            }
+            
+            fetch(`/admin/shipping/email`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Cache: "no-cache"
+                },
+                credentials: "include",
+                body: JSON.stringify(data)
+            }).then(res=>res.json()).then(res=>{
+                if(res.error){
+                    document.getElementById('shipping_error').parentNode.style.display="block";
+                    document.getElementById('shipping_error').innerText = res.message;
+                    console.log(res);
+                }else{
+                    document.getElementById('shipping_error').parentNode.style.display="none";
+                    document.querySelector('#modal2 .modal-close').click();
+                    handleTemplateChange({value:"null"});
+                    alert(res.message);
+                }
+            });
+        }
+        function handleTemplateChange(e){
+            let id = e.value;
+            let template = document.querySelector("templates #"+id);
+            if(template === null){
+                alert("Template not found");
+                return;
+            }
+            let subject = template.querySelector('.subject').innerText;
+            let from = template.querySelector('.from').innerText;
+            let text = template.querySelector('.body').innerHTML;
+
+            document.getElementById('shipping_subject').value = subject;
+            document.getElementById('from_email').value = from;
+            document.getElementById('textarea1').value = text;
+
+        }
+        $(document).ready(function() {
+            M.updateTextFields();
+        });
+    </script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+    <templates style="display:none;">
+        <div id="steam-key">
+            <p class="from">delivery@magicunbox.com</p>
+            <p class="subject">Item delivery</p>
+            <p class="body">
+                Dear MagicUnbox user, <br>
+                <br>
+                This is automatic e-mail to notice you about item delivery. <br>
+                We  congratulate you on you'r prize. <br>
+                Steam key : ##special##
+                <br><br>
+                We hope to see you try your luck on <a href="https://magicunbox.com">magicunbox.com</a> again and win more awesome prizes! <br>
+                If you have any questions or complains, please contact <a href="mailto:support@magicunbox.com">support@magicunbox.com</a>. <br>
+                Best reagrds, MagicUnbox team. <br>
+                <br>
+            </p>
+        </div>
+        <div id="item-delivery">
+            <p class="from">delivery@magicunbox.com</p>
+            <p class="subject">Item delivery</p>
+            <p class="body">
+                Dear MagicUnbox user, <br>
+                <br>
+                This is automatic e-mail to notice you about item delivery. <br>
+                We  congratulate you on you'r prize. <br>
+                We delivered you: ##special##
+                <br><br>
+                We hope to see you try your luck on <a href="https://magicunbox.com">magicunbox.com</a> again and win more awesome prizes! <br>
+                If you have any questions or complains, please contact <a href="mailto:support@magicunbox.com">support@magicunbox.com</a>. <br>
+                Best reagrds, MagicUnbox team. <br>
+                <br>
+            </p>
+        </div>
+        <div id="clear">
+            <p class="from">@magicunbox.com</p>
+            <p class="subject"></p>
+            <p class="body"></p>
+        </div>
+        <div id="null">
+            <p class="from"></p>
+            <p class="subject"></p>
+            <p class="body"></p>
+        </div>
+    </templates>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+</head>
+
+<body>
+    {{> navbar}}    
+
+    <div class="bg"></div>
+
+    <div class="body" style="margin-top:50px;">
+
+        <div class="row container">
+            
+            {{> admin-sidebar}}
+
+            <div class="col s9 m9 l9 blue-grey lighten-5">
+                <div class="row">
+                    <form class="input-field col s12" id="search_form" action="/admin/users">
+                        <input type="hidden" name="limit" value="50">
+                        <input type="hidden" name="offset" value="0">
+                        <input placeholder="" id="search_input" type="text" class="validate" name="search">
+                        <label for="search_input">Find user</label>
+                    </form>
+                    {{#unless results}}
+                    <p 
+                        class="btn col s12 red lighten-2" 
+                        id="search_error" 
+                        onclick="this.style.display='none'"
+                        style="display:none;"
+                    >
+                        User not found
+                    </p>
+                    {{/unless}}
+                </div>
+                <table class="box">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Money</th>
+                            <th>Access Level</th>
+                            <th>Promoter</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each users}}
+                        <tr>
+                            <form action="/admin/users" method="POST">
+                                <td><img class="circle" style="width: 50px;height: 50px;"  src="{{profileImage}}" alt="{{name}}"></td>
+                                <td>{{name}}</td>
+                                <td><input type="number" name="balance" id="balance" min="0" value="{{balance}}"></td>
+                                <td><input type="number" name="accessLevel" id="accessLevel" min="0" value="{{accessLevel}}"></td>
+                                <td><input type="number" name="promoter" id="promoter" min="0" max="1" value="{{promoter}}" oninput="handleChange(this)"></td>
+                                <td>
+                                    <button type="submit" style="min-width: 150px" class="btn deleteBtns" name="id" value="{{id}}" id="{{id}}">
+                                        <i class="material-icons right">save</i>
+                                        Save
+                                    </button>
+                                </td>
+                            </form>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <ul class="pagination row">
+                    <li class="waves-effect col s1"><a href="{{{prevLink}}}"><i class="material-icons">chevron_left</i></a></li>
+                    <li class="waves-effect col s1"><a href="{{{nextLink}}}"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
+            </div>
+        </div>
+
+    <script>
+            function handleChange(e){
+                if(e.value >1){
+                    e.value = 1;
+                }
+                if(e.value<0) {
+                    e.value = 0;
+                }
+            }
+        document.addEventListener('DOMContentLoaded', function() {
+
+        });
+    </script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+</body>
+
+</html>

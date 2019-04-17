@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+    <style>
+        .btn {
+            background: #20A4F3;
+        }
+        .navbar-btn {
+            border-radius: 6px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .inline-icon {
+            vertical-align: bottom;
+        }
+        .bg {
+            position: absolute;
+            background: url("/img/bg-light.png") no-repeat fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            top: 0;
+
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+
+            position: fixed; 
+            overflow: hidden;
+            overflow-y: hidden;
+            top: 0; right: 0; bottom: 0; left: 0; 
+
+        }
+        #rect {
+            position: absolute;
+            background: url("/img/rect.png") no-repeat;
+            -webkit-background-size: auto 150px;
+            -moz-background-size: auto 150px;
+            -o-background-size: auto 150px;
+            background-size: auto 150px;
+            height: 160px;
+            width: 100%;
+            z-index: 1;
+
+            overflow: hidden;
+            overflow-y: hidden;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .container {
+            padding:0;
+        }
+
+        #drops {
+            position: absolute;
+            width: 100%;
+            top:80px;
+            z-index: 3;
+        }
+        #tabs {
+            position: absolute;
+            width: 100%;
+            top:300px;
+            z-index: 3;
+        }
+
+        #seenOn {
+            background: linear-gradient(179.52deg, rgba(255, 255, 255, 0.65) 4.59%, rgba(255, 255, 255, 0.7) 17.32%, rgba(255, 255, 255, 0.75) 30.06%, rgba(255, 255, 255, 0.8) 43.33%, rgba(255, 255, 255, 0.85) 57.13%, rgba(255, 255, 255, 0.9) 70.93%, rgba(255, 255, 255, 0.95) 84.73%, #FFFFFF 97.99%);
+            mix-blend-mode: normal;
+            height: 300px;
+            width: 100%;
+            z-index: 4;
+        }
+        #footer {
+            position: absolute;
+            bottom: 0px;
+            background: #5D576B;
+            height: 300px;
+            width: 100%;
+        }
+        .body{
+            margin-top: 160px;
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/spinner.css">
+</head>
+
+<body>
+    <nav style="background: #2B2930">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo center">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down" >
+                {{#if user}}
+                <li>
+                    <span style="font-family: 'Russo One', sans-serif; font-size: 15px; padding:4px; background:#216C2A; border-radius:7px;">
+                        {{user.balance}} $
+                    </span>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light btn navbar-btn" style="120px;font-family: 'Quicksand', sans-serif; font-size:15px;
+                        box-shadow: 0px 0px 15px #20A4F3;
+                    ">
+                        ADD FUNDS
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile"style="display:flex; align-items:center;">
+                        <img style="height:40px; border-radius:50%;" src="https://yt3.ggpht.com/a-/AN66SAy-twvZT2i2tHZ6ZUdiKdeWP-IlWD6Az8AnXA=s288-mo-c-c0xffffffff-rj-k-no">
+                        <span style="padding-left: 10px; font-family: 'Russo One', sans-serif; font-size: 15px;">
+                            {{user.username}}
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light btn navbar-btn" style="margin-right: 20px;font-family: 'Quicksand', sans-serif; font-size:15px;">LOGOUT</a>
+                </li>
+                {{else}}
+                <li>
+                    <a onclick="onLoginClick();" class="waves-effect waves-light btn navbar-btn" style="font-family: 'Quicksand', sans-serif; font-size: 15px;">LOG IN</a>
+                </li>
+                <li>
+                    <a onclick="onRegisterClick();" class="waves-effect waves-light btn navbar-btn" style="margin-right: 120px;font-family: 'Quicksand', sans-serif; font-size:15px;">REGISTER</a>
+                </li>
+                {{/if}}
+            </ul>      
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li style="margin-left: 140px;">
+                    <div style="display: inline;">
+                        <i style="display: inherit;" class="material-icons inline-icon">people</i>
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{registeredUsers}}</span>
+                    </div>
+                </li>
+                <li style="margin-left: 70px;">
+                    <div style="display: inline;">
+                        <i style="display: inline;" class="material-icons inline-icon">person</i> 
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">1</span>
+                    </div>
+                </li>
+                <li style="margin-left: 70px;">
+                    <div style="display: inline;">
+                        <i style="display: inline;" class="material-icons inline-icon">casino</i> 
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{drops.length}}</span>
+                    </div>
+                </li>
+            </ul>      
+
+        </div>
+    </nav>
+
+    <div id="rect"></div>
+    <div class="bg"></div>
+
+    <div style="position: absolute; top: 90px; z-index:3; left: 180px; display:flex; align-items:center;">
+        <span style="font-size: 23px; font-family: Russo One, sans-serif;">
+            LIVE DROPS:
+        </span>
+        <img src="/img/open-cardboard-box (2).png">
+    </div>
+
+    <div id="drops">
+        <div class="container">
+            <div class="row flex">
+
+                {{#each drops}}
+                <div class="col" style="text-align: center;">
+                    <img src="/img/items/{{this.item.image}}"
+                        style="height:60px;"
+                    >
+                    <br>
+                    <div style="display: inline;">
+                        <span 
+                            style=" font-family: 'Roboto', sans-serif; 
+                                background:#20A4F3;
+                                border-radius: 18px;
+                                font-size: 14px;
+                                color: #FFFFFF;
+                                padding:4px;
+                            ">
+                            {{this.user.username}}
+                        </span>
+                    </div>
+                    <br>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="body">
+
+        
+<div class="row container">
+    <div class="collection col s3 m3 l3">
+        <a href="#!" class="collection-item active">Box</a>
+        <a href="#!" class="collection-item">Items</a>
+    </div>
+    <div class="col s9 m9 l9 grey lighten-4">
+        <form class="row">
+            <div class="input-field col s12">
+                <input id="name" type="text" class="validate">
+                <label for="name">Item name</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="price" type="text" class="validate">
+                <label for="price">Item price</label>
+            </div>
+             <div class="range-field col s12">
+                <label for="weight" style="font-size:14px">Item weight <span id="tezina">100</span></label>
+                <input type="range" id="weight" min="1" max="2000" value="100"/>
+            </div>
+            <div class="input-field col s12">
+                <select id="box">
+                <option value="" disabled selected>Choose your option</option>
+                {{#each boxes}}
+                    <option value="{{box.id}}">{{box.name}}</option>
+                {{/each}}
+                </select>
+                <label>Add to box:</label>
+            </div>
+            <div class="file-field col s12 m12 l12">
+                <div class="btn">
+                    <span>Box image</span>
+                    <input id="image" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <div class="col s12 m12 l12">
+                <button class="btn waves-effect waves-teal btn-flat btn-large red lighten-2 col s6 m6 l6">BACK</button>
+                <button class="btn waves-effect waves-teal btn-flat btn-large cyan lighten-2 col s6 m6 l6">SAVE</button>
+
+            </div>
+            <span style="padding: 5px"></span>
+            <div class="col s12 m12 l12" style="text-align: center">
+                <img id="showImage" class="responsive-img" src="">
+             </div>
+        </form>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, {});
+
+    let name = document.querySelector("#name");
+    let price = document.querySelector('#price');
+    let weight = document.querySelector("#price");
+    let box = document.querySelector("#box");
+    let image = document.querySelector("#image");
+    let showImage = document.querySelector("#showImage");
+
+    image.addEventListener('change',showMeImage);
+    function showMeImage(e){
+        readURL(e.target,showImage);
+    }
+    function readURL(input,img) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                img.src= e.target.result;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+  });
+</script>
+</body>
+</html>

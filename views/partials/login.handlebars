@@ -1,0 +1,141 @@
+<div  class="modal transparent" id="login" >
+
+    <div class="col s12 z-depth-6 card-panel login-card-panel">
+        <form class="login-form" action="/login" method="POST">
+
+            <a href="#" onclick="closeLoginModal();">
+                <i class="material-icons">close</i>
+            </a>
+
+            <div class="row" style="margin-bottom: 0;">
+                <h2 style="text-align: center; font-family: 'Quicksand', sans-serif;">Log in</h2>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mail_outline</i>
+                    <input class="validate" id="email" name="email" type="email" required>
+                    <label for="email" data-error="wrong" data-success="right">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock_outline</i>
+                    <input id="password" name="password" type="password" required>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m12 l12">
+                    <label>
+                        <input type="checkbox" name="tc" id="LogintcLogin"/>
+                        <span>I agree to the <a href="/legal">Terms of Use &amp; Privacy Policy</span>
+                    </label>
+                </div>
+            </div>
+                <div class="row hide" style="margin-top:50px;" id="login-error">
+                    <span class="col s1 m1 l1"></span>
+                    <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                        <i class="material-icons right">close</i>
+                        <span class="data"></span>
+                    </a>
+                </div>
+            <div class="row">
+                <div class="input-field col s12" >
+                    <button style="color: #FFF;" type="submit" class="btn waves-effect waves-light #29b6f6 light-blue lighten-1 col s12 white-text">
+                        Login
+                    </button>
+                </div>
+            </div>
+            <div class="row center-align">
+                <span>Or log in using</span>
+            </div>
+            <div class="row hide c-tc" id="termsLogin2" style="margin-top: 25px;margin-bottom:25px;">
+                <span class="col s1 m1 l1"></span>
+                <a class="btn-flat red lighten-2 col s10 m10 l10" onclick="this.parentNode.classList.add('hide');" style="text-align: center">
+                    <i class="material-icons right">close</i>
+                    <span class="data">Please make sure to check this box</span >
+                </a>
+            </div>
+            <br>
+            <div class="row" style="margin-bottom:0px !important;">
+                {{!-- <div class="col s3 m3 l3">
+                    <a onclick="checkTerms('fb')"><img src="/img/icons/facebook.png" alt="fb"></a>
+                </div>
+                <div class="col s3 m3 l3">
+                    <a onclick="checkTerms('tw')"><img src="/img/icons/twitter.png" alt="tw"></a>
+                </div> --}}
+                <div class="col s12" style="display:flex; justify-content:center; text-align:center; align-items: center">
+                    <img  onclick="checkTerms('st')" style="cursor:pointer; width: 46px; height: 46px; margin: 0 5px;"  class="circle  responsive-img" src="/img/image/steam.png">
+                    <img  onclick="checkTerms('go')" style="cursor:pointer; width: 55px; height: 50px; margin: 0 5px;"  class="circle  responsive-img" src="/img/icons/g.png">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin medium-small"><a href="#" onclick="closeLoginModal();openRegisterModal();">Register Now!</a></p>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin right-align medium-small"><a href="/recovery">Forgot password?</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let loginForm = document.querySelector('#login .login-form');
+    let error = document.querySelector("#login-error");
+    loginForm.addEventListener('submit',handleLoginSubmit);
+    async function handleLoginSubmit(e){
+        e.preventDefault();
+        let formData = $(loginForm).serializeArray();
+        let data = {};
+        formData.forEach(input=>{
+            data[input['name']] = input['value'];
+        });
+        let response = await fetch("/login",{
+            method:"POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Cache': 'no-cache'
+            },
+            credentials: 'include',
+            body:JSON.stringify(data)
+        });
+        let code = await response.text();
+        let html = new DOMParser().parseFromString(code,"text/html");
+        let childCount = html.querySelector("body nav .nav-wrapper ul:first-of-type");
+        if(childCount.childElementCount===4){
+            let origin = window.location.origin;
+            let pathName = window.location.pathname;
+            let url = origin+ pathName;
+            window.location.replace(url);
+        }else{
+            error.classList.remove('hide');
+            error.querySelector('.data').innerText = "Invalid username/password";
+        }
+    }
+    let checkTerms = (type) =>{
+        let checkbox = document.getElementById('LogintcLogin')
+        if (checkbox.checked == true){
+            switch(type){
+            case 'fb':
+                location.href = "/login/fb"
+                break;
+            case 'tw':
+                location.href = "/login/twitter"
+                break;
+            case 'go':
+                location.href = "/login/google"
+                break;
+            case 'st':
+                location.href = "/login/steam"
+                break;
+            }
+            
+        }else{
+            document.getElementById('termsLogin2').classList.remove('hide');
+        }
+    }
+</script>

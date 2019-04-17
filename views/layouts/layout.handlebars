@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+    <style>
+        .btn {
+            background: #20A4F3;
+        }
+        .navbar-btn {
+            border-radius: 6px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .inline-icon {
+            vertical-align: bottom;
+        }
+        .card {
+            background: linear-gradient(180deg, rgba(0, 26, 86, 0.9) 0%, rgba(0, 11, 37, 0.543539) 25.97%, rgba(83, 122, 199, 0.225) 49.17%, rgba(255, 255, 255, 0.036) 100%);
+            mix-blend-mode: normal;
+            border-radius: 6px;
+            height: 254px; 
+            width: 224px;
+            font-family: 'Russo one', sans-serif;
+            z-index: 2;
+        }
+        .bg {
+            position: absolute;
+            background: url("/img/bg.png") no-repeat fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            top: 0;
+
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+
+            position: fixed; 
+            overflow: hidden;
+            overflow-y: hidden;
+            top: 0; right: 0; bottom: 0; left: 0; 
+
+        }
+        #rect {
+            position: absolute;
+            background: url("/img/rect.png") no-repeat;
+            -webkit-background-size: auto 150px;
+            -moz-background-size: auto 150px;
+            -o-background-size: auto 150px;
+            background-size: auto 150px;
+            height: 160px;
+            width: 100%;
+            z-index: 1;
+
+            overflow: hidden;
+            overflow-y: hidden;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .container {
+            padding:0;
+        }
+
+        #drops {
+            position: absolute;
+            width: 100%;
+            top:80px;
+            z-index: 3;
+        }
+        #tabs {
+            position: absolute;
+            width: 100%;
+            top:300px;
+            z-index: 3;
+        }
+
+        #seenOn {
+            background: linear-gradient(179.52deg, rgba(255, 255, 255, 0.65) 4.59%, rgba(255, 255, 255, 0.7) 17.32%, rgba(255, 255, 255, 0.75) 30.06%, rgba(255, 255, 255, 0.8) 43.33%, rgba(255, 255, 255, 0.85) 57.13%, rgba(255, 255, 255, 0.9) 70.93%, rgba(255, 255, 255, 0.95) 84.73%, #FFFFFF 97.99%);
+            mix-blend-mode: normal;
+            height: 300px;
+            width: 100%;
+            z-index: 4;
+        }
+        #footer {
+            position: absolute;
+            bottom: 0px;
+            background: #5D576B;
+            height: 300px;
+            width: 100%;
+        }
+        .body{
+            margin-top: 160px;
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/spinner.css">
+</head>
+
+<body>
+    <nav style="background: #2B2930">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo center">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down" >
+                {{#if user}}
+                <li>
+                    <span style="font-family: 'Russo One', sans-serif; font-size: 15px; padding:4px; background:#216C2A; border-radius:7px;">
+                        {{user.balance}} $
+                    </span>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light btn navbar-btn" style="120px;font-family: 'Quicksand', sans-serif; font-size:15px;
+                        box-shadow: 0px 0px 15px #20A4F3;
+                    ">
+                        ADD FUNDS
+                    </a>
+                </li>
+                <li style="display:flex; align-items:center;">
+                    <img style="height:40px; border-radius:50%;" src="https://yt3.ggpht.com/a-/AN66SAy-twvZT2i2tHZ6ZUdiKdeWP-IlWD6Az8AnXA=s288-mo-c-c0xffffffff-rj-k-no">
+                    <span style="padding-left: 10px; font-family: 'Russo One', sans-serif; font-size: 15px;">
+                         {{user.username}}
+                    </span>
+                </li>
+                <li>
+                    <a href="/logout" class="waves-effect waves-light btn navbar-btn" style="margin-right: 20px;font-family: 'Quicksand', sans-serif; font-size:15px;">LOGOUT</a>
+                </li>
+                {{else}}
+                <li>
+                    <a onclick="onLoginClick();" class="waves-effect waves-light btn navbar-btn" style="font-family: 'Quicksand', sans-serif; font-size: 15px;" href="/login">LOG IN</a>
+                </li>
+                <li>
+                    <a onclick="onRegisterClick();" class="waves-effect waves-light btn navbar-btn" style="margin-right: 120px;font-family: 'Quicksand', sans-serif; font-size:15px;">REGISTER</a>
+                </li>
+                {{/if}}
+            </ul>      
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li style="margin-left: 140px;">
+                    <div style="display: inline;">
+                        <i style="display: inherit;" class="material-icons inline-icon">people</i>
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{registeredUsers}}</span>
+                    </div>
+                </li>
+                <li style="margin-left: 70px;">
+                    <div style="display: inline;">
+                        <i style="display: inline;" class="material-icons inline-icon">person</i> 
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">1</span>
+                    </div>
+                </li>
+                <li style="margin-left: 70px;">
+                    <div style="display: inline;">
+                        <i style="display: inline;" class="material-icons inline-icon">casino</i> 
+                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{drops.length}}</span>
+                    </div>
+                </li>
+            </ul>      
+
+        </div>
+    </nav>
+
+    <div id="rect"></div>
+    <div class="bg"></div>
+
+    <div style="position: absolute; top: 90px; z-index:3; left: 200px; display:flex; align-items:center;">
+        <span style="font-size: 23px; font-family: Russo One, sans-serif;">
+            LIVE DROPS:
+        </span>
+        <img src="/img/open-cardboard-box (2).png">
+    </div>
+
+    <div id="drops">
+        <div class="container">
+            <div class="row flex">
+                {{#each drops}}
+                <div class="col" style="text-align: center;">
+                    <img src="https://vignette.wikia.nocookie.net/halo/images/1/14/Xbox_One.png/revision/latest?cb=20130522132220"
+                        style="height:40px;"
+                    >
+                    <br>
+                    <div style="display: inline;">
+                        <span 
+                            style=" font-family: 'Roboto', sans-serif; 
+                                background:#20A4F3;
+                                border-radius: 18px;
+                                font-size: 14px;
+                                color: #FFFFFF;
+                                padding:4px;
+                            ">
+                            {{this.user.username}}
+                        </span>
+                    </div>
+                    <br>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        {{{body}}}
+    </div>
+</body>
+</html>
