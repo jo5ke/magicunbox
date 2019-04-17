@@ -57,7 +57,7 @@ module.exports = {
           include: [{
             model: models.item
           }],
-          limit:10
+          limit:15
         })
 
         items = items.map(item => {
@@ -114,7 +114,7 @@ module.exports = {
           include: [{
             model: models.item }]
           ,  attributes: ['id', 'sold', 'shippingStatus', 'trackingCode', 'updatedAt'],
-          limit:10
+          limit:15
         })
         transactions = await models.transaction.findAll({where:{userId: req.user.id}})
         registeredUsers = await models.user.count()
