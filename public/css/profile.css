@@ -1,0 +1,28 @@
+#tabs {
+    position: absolute;
+    width: 100%;
+    top:250px;
+    z-index: 3;
+}
+.tabs .indicator {
+    background-color: #20A4F3;
+}
+.tabs .tab a {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    color: #2B2930;
+}
+.tabs .tab a.active {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    color: #2B2930;
+}
+.tabs .tab a:focus {
+    background: #CED3F5;
+}
+.tabs .tab a:hover {
+    color: #20A4F3;
+}
+.tabs .tab a:focus.active {
+    background-color: #FFF;
+}

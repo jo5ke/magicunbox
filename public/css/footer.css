@@ -1,0 +1,161 @@
+.page-footer {
+  background-color: #5d576b;
+}
+.footer-copyright {
+  text-align: center;
+  color: darkgray !important;
+}
+.footer-container {
+  width: 85%;
+  margin: 0 auto;
+}
+.as {
+  color: darkgrey;
+  transition: 0.2s;
+}
+
+.as:hover {
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+.social {
+  width: 60px;
+  padding-top: 20px;
+  padding-left: 5px;
+  opacity: 0.5;
+}
+
+.social:hover {
+  opacity: 1;
+}
+
+.discord {
+  padding-top: 15px;
+  padding-left: 15px;
+  width: 90%;
+}
+
+.footer-text {
+  text-align: left;
+  font-size: 15px;
+  color: darkgray;
+  text-indent: -3px;
+  position: relative;
+    /* padding: 0px 0.75rem; */
+  top: 2.75rem;
+}
+
+.footer-flex ul {
+  margin-left: 30px;
+  flex: 1;
+}
+.page-footer .row {
+  margin-bottom: 0;
+}
+
+.footer-flex {
+  display: flex;
+  flex-direction: column;
+}
+.footer-items {
+  align-items: center;
+}
+ul:not(.browser-default)>li {
+  font-size: 18px;
+}
+.footer-image {
+  width: 100%;
+}
+
+.footer-image img {
+  width: 125%;
+}
+
+.footer-text-center {
+  text-align: center;
+}
+
+.footer-margin-top {
+  margin-top: 28px;
+}
+
+.footer-icon {
+  width: 15px;
+  display: inline-block;
+  margin-right: 10px;
+  top: 2.75rem;
+}
+
+.footer-checkout {
+  width: 250px;
+}
+.footer-license a {
+  width: 100px;
+}
+
+.footer-icon img,
+.footer-license a img {
+  width: 80%;
+  position: relative;
+}
+
+.footer-license img {
+  top: 0.75em;
+}
+
+.social_and_discord a {
+  display: inline-block;
+}
+
+.footer-text-grey {
+  color: darkgrey;
+}
+
+.footer-text a,
+.footer-text-grey a {
+  color: #fff;
+}
+
+.footer-grayscale {
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+}
+
+.footer-grayscale:hover {
+  filter: grayscale(0);
+}
+
+.footer-flex-row {
+  flex-direction: row;
+}
+
+@media all and (max-width: 980px) {
+  .footer-flex-row {
+    flex-direction: column;
+  }
+}
+
+.footer-sitemap {
+  position: relative;
+  top: 2.85rem;
+}
+
+.footer-sitemap a {
+  font-size:20px;
+}
+
+#licenseitem {
+  max-height:100% !important;
+  max-width: 80% !important;
+  background-color: transparent!important;
+}
+
+#close-license-icon {
+  font-size: 30px !important;
+  color: #fff !important;
+}
+
+.slick-slide a {
+  z-index : 5;
+}

@@ -1,0 +1,278 @@
+#main {
+  width: 100%;
+  /* margin-top: 160px; */
+  display: flex;
+  flex-direction: column;
+}
+#main .row1 {
+  width: 100%;
+}
+#main .row1 .box {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25), inset -1px -1px 2px rgba(0, 0, 0, 0.25);
+  border: none;
+  margin: auto;
+  max-width: 500px;
+  display: flex;
+}
+#main .row1 .box img {
+  flex: 1;
+  width: 100px;
+  height: 300px;
+}
+#main .row1 .box .data {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+#main .row1 .box .data p {
+  margin: auto;
+}
+#main .row1 .box .data p.title {
+  font-family: Russo One;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 35px;
+  color: #2B2930;
+  mix-blend-mode: normal;
+  text-shadow: 3px 3px 20px #324F80;
+}
+#main .row1 .box .data p.price {
+  font-family: Russo One;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 30px;
+  color: #2B2930;
+}
+#main .row2 {
+  margin: 50px 0;
+  width: 100%;
+  position: relative;
+}
+#main .row2 .wrap {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+#main .row2 .wrap .spinner {
+  width: max-content;
+  height: 150px;
+  background: white;
+  mix-blend-mode: normal;
+  border-top: 0.5px solid rgba(32, 164, 243, 0.75);
+  border-bottom: 0.5px solid rgba(32, 164, 243, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main .row2 .wrap .spinner .item {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main .row2 .wrap .spinner .item img {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto; 
+  height: auto;
+}
+#main .row2 span.line {
+  width: 4px;
+  z-index: 5;
+  height: 200px;
+  background-color: rgba(32, 164, 243, 0.75);
+  position: absolute;
+  top: -25px;
+  left: calc( 50% - 2.5px );
+}
+#main .row2 span.line::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: -13px;
+  width: 30px;
+  height: 30px;
+  background-image: url('/img/spic.png');
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  z-index: 6;
+}
+#main .row2 span.line::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  left: -13px;
+  width: 30px;
+  height: 30px;
+  background-image: url('/img/spic.png');
+  background-size: 100% 100%;
+  z-index: 6;
+}
+#main .row2 span.area {
+  position: absolute;
+  left: calc( 50% - 100px );
+  top: -25px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.5);
+  mix-blend-mode: normal;
+  box-shadow: 0px 0px 10px rgba(32, 164, 243, 0.24);
+  border-radius: 12px;
+}
+#main .row2 button.open {
+  position: relative;
+  width: 200px;
+  padding: 10px;
+  background: #20A4F3;
+  box-shadow: 0px 0px 15px #20A4F3;
+  border: none;
+  border-radius: 6px;
+  margin: 50px auto 0 auto;
+  left: calc( 50% - 100px );
+  z-index: 5;
+  font-family: Russo One;
+  font-size: 25px;
+  color: #fff;
+}
+
+.bg {
+    position: absolute;
+    background: url("../img/bg-light.png") no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    top: 0;
+
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+
+    position: fixed; 
+    overflow: hidden;
+    overflow-y: hidden;
+    top: 0; right: 0; bottom: 0; left: 0; 
+}
+.body{
+    margin-top: 160px;
+    z-index: 2;
+}
+.zoom:hover {
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transition: 0.25s ease;
+}
+#items {
+    width: 90%;
+    margin: auto;
+    border-radius: 6px;
+    background: #FFF;
+    z-index: 10;
+    margin-bottom: 60px;
+}
+#title {
+    width: 100%;
+    text-align: center;
+    font-family: Russo One;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 29px;
+}
+
+#winpopup {
+  z-index: 10;
+  display: block;
+  position: fixed;
+  width: 710px;
+  height: 518px;
+  left: calc( 50% - 355px );
+  top: 100px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: opacity 1s;
+  animation: opin 1s linear forwards;
+  background-image: url("/img/spinner-bg.png");
+  background-size: 100% 100%;
+  border-radius: 5px;
+}
+#winpopup .title {
+  width: 100%;
+  text-align: center;
+  font-family: Quicksand;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 35px;
+}
+#winpopup img.item {
+  position: absolute;
+  max-width: 200px;
+  max-height: 200px;
+  left: calc( 50% - 150px);
+  top: 15%;
+}
+#winpopup p.name {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: 44%;
+  font-family: Quicksand;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 35px;
+}
+#winpopup p.price {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: 60%;
+  font-family: Quicksand;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 35px;
+}
+#winpopup .dugmeta {
+  width: 100%;
+  position: absolute;
+  top: 80%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+#winpopup .dugmeta button {
+  background: #20A4F3;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 24px;
+  font-family: Quicksand;
+}
+
+@keyframes opin {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=spinner.css.map */

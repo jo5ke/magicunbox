@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url("trianglify.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.nav-wrapper {
+    background-color: black;
+}
+.case {
+    width: 250px;
+    height: 300px;
+    padding-top: 20px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 7px;
+    margin-top: 20px;
+    background: inherit;
+    z-index: 99;
+    box-shadow: inset 0 0 0 200px rgba(255,255,255,0.2);
+}
+.case:before{
+    width: 250px;
+    height: 300px;
+    padding-top: 20px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 7px;
+    margin-top: 20px;
+    background: black;
+
+
+
+
+}
+
+.case_image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 160px;
+    height: 107px;
+    padding-bottom: 20px;
+    z-index: 100;
+
+}
+
+.case_title{
+    text-align: center;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.button {
+    text-decoration: none;
+    color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    background: red;
+    border-radius: 7px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 25px;
+    padding-right: 25px;
+    padding-left: 25px;
+    margin-left: 40px;
+}

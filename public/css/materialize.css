@@ -1,0 +1,10 @@
+.btn {
+    background: #20A4F3;
+    border-radius: 6px;
+    color: #FFF;
+}
+.btn:hover {
+    background-color: #20A4F3;
+    box-shadow: 0px 0px 15px #20A4F3;
+}
+

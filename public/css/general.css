@@ -1,0 +1,91 @@
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#rect {
+    position: absolute;
+    background: url("../img/rect2.png") no-repeat;
+    -webkit-background-size: auto 160px;
+    -moz-background-size: auto 160px;
+    -o-background-size: auto 160px;
+    background-size: auto 160px;
+    height: 160px;
+    width: 100%;
+    z-index: 1;
+
+    overflow: hidden;
+    overflow-y: hidden;
+}
+.bg {
+    position: absolute;
+    background: url("../img/bg.png") no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    top: 0;
+
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+
+    position: fixed; 
+    overflow: hidden;
+    overflow-y: hidden;
+    top: 0; right: 0; bottom: 0; left: 0; 
+
+}
+#drops {
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    top:80px;
+    z-index: 3;
+    max-height: 100px;
+}
+#seenOn {
+    background: url("../img/winners.png") no-repeat;
+    background-size: 100% 100%;
+    mix-blend-mode: normal;
+    height: 250px;
+    z-index: 4;
+}
+#footer {
+    background: #5D576B;
+    height: 300px;
+    width: 100%;
+}
+
+#login{
+    width: 500px;
+    overflow-y: unset;
+    top: 0px !important;
+}
+#register{
+    width: 500px;
+    overflow-y: unset;
+    top: 0px !important;
+}
+.login-card-panel{
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#sociallogin{
+    margin-left: 17%;
+ }
+ 
+#payment{
+    width: 500px;
+    overflow-y: unset;
+    top: 100px !important;
+    border-radius: 6px;
+}
+
+.box-zoom:hover {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1); 
+    transition: 0.25s ease;
+}
