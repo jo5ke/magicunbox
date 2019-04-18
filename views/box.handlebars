@@ -70,7 +70,23 @@
             </div>
 
             <div id="items">
-                <p id="title">Items you can win</p>
+                <p id="title">Items you can win
+                    <label class="labelwin" > Winning chances</label>
+                    <div class="slider_holder">
+                    <label class="switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round" id="items_slider"></div>
+                    </label>
+                    
+                    </div>  
+                        
+                 <div class="buttonpromise_holder">
+                    <a onclick="openFairModal();">
+                        <img src="/img/image/prob 11.png" class="buttonpromise"  alt="packing promise" />
+                    </a>
+                </div>
+                </p>
+            
                 <div class="row flex">
                     {{#each items}}
                         {{> item }}

@@ -16,6 +16,10 @@ let edititemModal = M.Modal.init(edititem);
 let licenseitem = document.getElementById("licenseitem")
 let licenseModal = M.Modal.init(licenseitem);
 
+let fair=document.getElementById("fair");
+console.log(fair);
+let fairModal = M.Modal.init(fair);
+
 function openLoginModal() {
     loginModal.open();
 }
@@ -57,5 +61,15 @@ function openLicenseModal() {
 
 function closeLicenseModal() {
     licenseModal.close()
+}
+
+function openFairModal()
+{
+    fairModal.open();
+}
+
+function closeFairModal()
+{
+    fairModal.close();
 }
 

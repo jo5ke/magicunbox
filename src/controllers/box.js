@@ -20,15 +20,17 @@ module.exports = {
         items.push(boxitem.item);
       });
       box = {id:box.id,name:box.name,price:box.price, image: box.image};
-      items = items.map(item=>{
+      items = items.map(item=>{console.log(item)
         return{
           id: item.id,
           name: item.name,
           price: item.price,
+          winChances: item.winningChances,
           image: '/img/items/'+item.image,
           description: item.description
         }
       })
+      console.log(items);
 
       drops = await models.inventory.findAll({
         include: [{
