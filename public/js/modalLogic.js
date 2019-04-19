@@ -16,9 +16,8 @@ let edititemModal = M.Modal.init(edititem);
 let licenseitem = document.getElementById("licenseitem")
 let licenseModal = M.Modal.init(licenseitem);
 
-let fair=document.getElementById("fair");
-console.log(fair);
-let fairModal = M.Modal.init(fair);
+var fairprov = document.getElementById("fairprov");
+var fairModal = M.Modal.init(fairprov);
 
 function openLoginModal() {
     loginModal.open();
@@ -65,11 +64,29 @@ function closeLicenseModal() {
 
 function openFairModal()
 {
+ 
     fairModal.open();
 }
 
 function closeFairModal()
 {
     fairModal.close();
+}
+
+function showPercentage()
+{
+    var percentage=document.getElementsByClassName("percentage");
+    for(var i=0;i<percentage.length;i++)
+    {
+        if(percentage[i].style.display == "none")
+    {
+        percentage[i].style.display="block";
+
+    }
+    else
+    {
+        percentage[i].style.display="none";
+    }
+    }
 }
 

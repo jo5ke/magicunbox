@@ -3,7 +3,23 @@
         <div class="card-image" onclick="openModal(convert(`{{name}}`),'{{price}}','{{image}}',convert(`{{description}}`), {{box}})" style="height: 100%;">
             <img class="zoom" src="{{image}}" alt="{{name}}" style="padding-top:10px; height: auto; width: auto; max-width: 90%; max-height: 80%; display:block; margin:auto; z-index:3"/>
         </div>
+        <div class="percentage card-image" style="height: 100%; display:none;">
+            <img src="/img/image/belo cisto za sad.png" alt="white pure" style="padding-top:20px; top:-280px; left:-60px; height: 90%; width: 140%;  max-height: 80%; display:block; margin:auto; z-index:6" />
+            <span style="font-family: Russo One;
+                font-style: normal;
+                font-weight: normal;
+                line-height: normal;
+                font-size: 20px;
+                position: absolute;
+                top:-180px;
+                left:130px;
+                z-index:7;
+            ">
+            % {{winChances}}
+            </span> 
+        </div>
         <div class="card-content" style="position: absolute; bottom: -20px;  width: 100%; text-align: center; z-index:4;">
+        
             <span style="font-family: Russo One;
                 font-style: normal;
                 font-weight: normal;
@@ -21,15 +37,7 @@
             ">
             $ {{price}}
             </span>
-            <br>
-            <span style="font-family: Russo One;
-                font-style: normal;
-                font-weight: normal;
-                line-height: normal;
-                font-size: 20px;
-            ">
-            % {{winChances}}
-            </span>
+
         </div>
     </div>
 </div>

@@ -74,7 +74,7 @@
                     <label class="labelwin" > Winning chances</label>
                     <div class="slider_holder">
                     <label class="switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
+                    <input type="checkbox" id="checkbox" onclick="showPercentage();" />
                     <div class="slider round" id="items_slider"></div>
                     </label>
                     
@@ -102,6 +102,8 @@
     {{> footer}}
 
     {{> iteminfo}}
+
+    {{> fairpacking}}
 
 {{#unless user}}
 <script>
