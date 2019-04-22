@@ -179,13 +179,11 @@ body {
 {
     position: absolute;
     top: 85px;
-    left: 650px;
+    left: 620px;
     height: 10px;
     width: 20px;
     font-size: 15px;
     z-index: 4;
-
-
 }
 
 
