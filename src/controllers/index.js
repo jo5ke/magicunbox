@@ -57,6 +57,7 @@ module.exports = {
           include: [{
             model: models.item
           }],
+          order: [['createdAt', 'DESC']],
           limit:15
         })
 
@@ -113,8 +114,7 @@ module.exports = {
           },
           include: [{
             model: models.item }]
-          ,  attributes: ['id', 'sold', 'shippingStatus', 'trackingCode', 'updatedAt'],
-          limit:15
+          ,  attributes: ['id', 'sold', 'shippingStatus', 'trackingCode', 'updatedAt']
         })
         transactions = await models.transaction.findAll({where:{userId: req.user.id}})
         registeredUsers = await models.user.count()

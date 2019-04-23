@@ -196,21 +196,24 @@ passport.use(
 passport.use(new SteamStrategy({
   returnURL: 'https://magicunbox.com/login/steam/cb',
   realm: 'https://magicunbox.com/',
+  // returnURL: 'http://localhost:8111/login/steam/cb',
+  // realm: 'http://localhost:8111/',
   apiKey: 'BAC918E393C05F9789FE58D7530AFCFF'
 },
 async function(identifier, profile, done) {
   // User.findByOpenID({ openId: identifier }, function (err, user) {
   //   return done(err, user);
   // });
-  console.log(profile);
+  console.log('identifier:', identifier);
+  console.log('PROFILE',profile);
   let json = profile._json;
   let [twitterID,name,username,email,profileImage,loginType] = [
-    identifier,
+    json.steamid,
     // json.id,
-    json.name,
-    json.screen_name,
-    json.email,
-    json.profile_image_url_https,
+    json.realname,
+    json.personaname,
+    'unknown@steam.com',
+    json.avatar,
     "steam"
   ];
 

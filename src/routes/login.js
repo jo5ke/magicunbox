@@ -15,13 +15,13 @@ router.get('/twitter/cb', Controller.twitter.cb.auth ,Controller.twitter.cb.get)
 router.get("/fb", Controller.fb.get);
 router.get("/fb/cb", Controller.fb.cb.auth, Controller.fb.cb.get);
 
+// Steam
+router.get('/steam',Controller.steam.get);
+router.get('/steam/cb',Controller.steam.cb.auth, Controller.steam.cb.get);
+
 // Google
 router.get('/google',Controller.google.get);
 router.get('/google/cb',Controller.google.cb.auth,Controller.google.cb.get);
-
-// Steam
-router.get('/steam',Controller.steam.get);
-router.get('/steam/cb',Controller.steam.cb.auth,Controller.steam.cb.get);
 
 //router.get('/:id', Controller.show);
 //router.put('/:id', Controller.update);
