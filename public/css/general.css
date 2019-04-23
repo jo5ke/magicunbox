@@ -99,9 +99,37 @@
     top: 1%;
     left: 85%;
     
-    
-  
 }
+
+.buttonpromise_holder a 
+{
+    display: block;
+    position: relative;
+}
+
+.buttonpromise_holder img:first-child
+{
+    opacity: 1;
+    transition: all .2s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.buttonpromise_holder img:last-child
+{
+        position: absolute;
+        left: 0;
+}
+
+.buttonpromise_holder:hover img:first-child
+{
+    opacity: 0;
+
+}
+
+
+
+
 .buttonpromise
 {
   
@@ -164,6 +192,8 @@ input:checked + .slider:before {
 .slider_holder {
     display: flex;
     justify-content: center;
+    position: absolute;
+    left: 50%;
 }
 #items_slider{
       height: 20px;
@@ -178,14 +208,19 @@ body {
 .labelwin 
 {
     position: absolute;
-    top: 4%;
-    left: 44%;
+    top: 80px;
+    left: 45%;
     height: 10px;
     width: 20px;
     font-size: 15px;
     z-index: 4;
 
 
+}
+
+.itemhover:hover
+{
+    cursor: pointer;
 }
 
 
