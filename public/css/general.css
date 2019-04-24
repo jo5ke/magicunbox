@@ -194,6 +194,7 @@ input:checked + .slider:before {
     justify-content: center;
     position: absolute;
     left: 50%;
+    z-index:7;
 }
 #items_slider{
       height: 20px;
