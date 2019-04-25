@@ -11,7 +11,6 @@ client.setRequestTimeout(3000);
 
 module.exports = {
   async get(req, res) {
-    console.log(req.query)
     let amount = req.query.amount
     let code = req.query.code //affiliate code usually null
     console.log('KOD ', code)

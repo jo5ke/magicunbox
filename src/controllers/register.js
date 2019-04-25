@@ -77,7 +77,9 @@ module.exports = {
       }else{
       let salt = await bcrypt.genSalt(10);
       password = await bcrypt.hash(password, salt);
-
+      console.clear();
+      console.log('***********************email to send:'+email);
+      sendEmail('petarchord@hotmail.com',email,'Test message','Hello bro!');
       var newUser = await models.user.create({
         email,
         password,
@@ -86,8 +88,6 @@ module.exports = {
       });
       req.flash("success_msg", "You are registered and now can login");
       backURL=req.header('Referer') || '/';
-      console.log('email to send:'+email);
-      sendEmail('petarchord@hotmail.com',email,'Test message','Hello bro!');
       res.redirect(backURL);
     }
     }

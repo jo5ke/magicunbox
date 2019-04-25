@@ -30,7 +30,7 @@ module.exports = {
           description: item.description
         }
       })
-      console.log(items);
+      
 
       drops = await models.inventory.findAll({
         include: [{

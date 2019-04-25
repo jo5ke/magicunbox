@@ -204,8 +204,7 @@ async function(identifier, profile, done) {
   // User.findByOpenID({ openId: identifier }, function (err, user) {
   //   return done(err, user);
   // });
-  console.log('identifier:', identifier);
-  console.log('PROFILE',profile);
+  
   let json = profile._json;
   let [twitterID,name,username,email,profileImage,loginType] = [
     json.steamid,
