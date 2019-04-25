@@ -2,6 +2,9 @@ const models = require("../../models");
 const bcrypt = require("bcryptjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const sendEmail = require("../../utils/sendEmail");
+
+
 
 module.exports = {
   post: async (req, res) => {
@@ -83,6 +86,8 @@ module.exports = {
       });
       req.flash("success_msg", "You are registered and now can login");
       backURL=req.header('Referer') || '/';
+      console.log('email to send:'+email);
+      sendEmail('petarchord@hotmail.com',email,'Test message','Hello bro!');
       res.redirect(backURL);
     }
     }
