@@ -118,11 +118,11 @@
 
 <script>
     let openModal = (name,price,image,desc)=>{
-        let boxName = window.location.href.split('boxes/')[1].replace("%20", " ")
+       // let boxName = window.location.href.split('boxes/')[1].replace("%20", " ")
         let imageDiv = document.getElementById('iiImage')
         imageDiv.src = image
         document.getElementById('iiName').innerText = name
-        document.getElementById('iiBox').innerText = boxName
+        document.getElementById('iiBox').innerText = name +" "+"Box";
         document.getElementById('iiDesc').innerText = desc
         openiteminfoModal()
     }
