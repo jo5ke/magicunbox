@@ -145,6 +145,24 @@
   color: #fff;
 }
 
+
+#main .row2 button.testspin {
+  position: relative;
+  width: 200px;
+  padding: 10px;
+  background: #20A4F3;
+  box-shadow: 0px 0px 15px #20A4F3;
+  border: none;
+  border-radius: 6px;
+  margin: 50px auto 0 auto;
+  left: calc( 50% - 100px );
+  z-index: 5;
+  font-family: Russo One;
+  font-size: 25px;
+  color: #fff;
+  margin-left: 20px;
+}
+
 .bg {
     position: absolute;
     background: url("../img/bg-light.png") no-repeat fixed;
