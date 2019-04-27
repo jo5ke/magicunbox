@@ -36,3 +36,12 @@ socket.on('drop', function(data){
         </div>
     `, 0, true)
 });
+
+
+$(document). ready(function(){
+        //hide truck on other pages
+        var pageURL = $(location). attr("href");
+        if(pageURL.indexOf('legal') != -1) {
+            $('.drops-truck-holder').hide();
+        } 
+});
