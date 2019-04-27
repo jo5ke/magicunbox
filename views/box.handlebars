@@ -66,8 +66,8 @@
                 </div>
                 <span class="area"></span>
                 <span class="line"></span>
-                 <button class="open">UNBOX</button> 
-                 <button class="testspin">Test spin </button> 
+                 <button class="open" >UNBOX</button> 
+                 <button class="testspin" {{#if testSpin }} disabled style="background-color:#bed0db;box-shadow:0px 0px 0px #FFF;" {{/if}} >TEST SPIN</button> 
             </div>
 
             <div id="items">
@@ -111,8 +111,9 @@
 {{#unless user}}
 <script>
     let unboxButton = document.querySelector('#main .row2 button.open');
-    let testSpin = document.querySelector('#main .row2 button.testspin');
-    testSpin.addEventListener('click',() => { openLoginModal() });
+    let testSpinButton = document.querySelector('#main .row2 button.testspin');
+
+    testSpinButton.addEventListener('click',() => { openLoginModal() });
     unboxButton.addEventListener('click', () => { openLoginModal() })
 
 </script>
@@ -150,6 +151,7 @@
     let spinner =  document.querySelector('#main .row2 .wrap .spinner');
     let line = document.querySelector('#main .row2 span.line');
     let unboxButton = document.querySelector('#main .row2 button.open');
+    let testSpinButton = document.querySelector('#main .row2 button.testspin');
     let mayWin = document.querySelector("#main .row3 div.items");
 
     let balance = document.getElementById("balance");
@@ -162,8 +164,8 @@
         console.log('box after if:'+box);
         console.log('items after if:'+items);
         {{#if user}}
-            
-         //   testSpin.addEventListener('click',() => { testSpinUnbox() });
+          
+            testSpinButton.addEventListener('click',testSpinUnbox);
             unboxButton.addEventListener('click', unbox)
             
         {{/if}}
@@ -224,9 +226,9 @@
 
     function testSpinUnbox(e) 
     {
-        testSpin.removeEventListener("click", testSpinUnbox);
-        testSpin.setAttribute("disabled",'true');
-        fetch(`/boxes/${box.id}/open`,{  
+        testSpinButton.removeEventListener("click", testSpinUnbox);
+        testSpinButton.setAttribute("disabled",'true');
+        fetch(`/boxes/${box.id}/test`,{  
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -239,6 +241,7 @@
             if(res.ok) {
                 res.json()
                     .then(res => {
+                        console.log('testSpinUnbox:', res.data);
                         winIt = res.data.item
                         winIt.image = '/img/items/'+winIt.image
                         testSpin(winIt, res.data.dropId)
@@ -311,9 +314,9 @@
             spinner.style.transition = transition;
             spinner.style.transform = animation;
 
-          /*  setTimeout(() => {
-                showPopUp(winIt,unboxButton, dropId, winIt.price);
-            }, duration * 1000); */
+            setTimeout(() => {
+                showPopUp(winIt,unboxButton, dropId, winIt.price,true);
+            }, duration * 1000); 
         {{/if}}
         {{#unless user}}
             alert("Pease log in")
@@ -334,18 +337,35 @@
 
 
 
-    function showPopUp(item, spinButton, dropId, price){
-        let content =  `
-        <div id="winpopup">
-            <p class="title">You unboxed</p>
-            <img src="${item.image}" alt="${item.name}" class="item" onload="this.style.left='calc( 50% - '+ (this.offsetWidth/2) +'px )';this.style.top='calc( 35% - '+ (this.offsetHeight/2) +'px )'">
-            <p class="name">${item.name}</p>
-            <p class="price">${item.price}$</p>
-            <div class="dugmeta">
-                <button class="sell">SELL ITEM</button>
-                <button class="again">UNBOX AGAIN</button>
-            </div>
-        </div>  `;
+    function showPopUp(item, spinButton, dropId, price, test=false){
+        let content;
+
+        if(test) {
+            content =  `
+            <div id="winpopup">
+                <p class="title">You unboxed</p>
+                <img src="${item.image}" alt="${item.name}" class="item" onload="this.style.left='calc( 50% - '+ (this.offsetWidth/2) +'px )';this.style.top='calc( 35% - '+ (this.offsetHeight/2) +'px )'">
+                <p class="name">${item.name}</p>
+                <p class="price">${item.price}$</p>
+                <div class="dugmeta">
+                    <button class="sell" disabled style="background-color:#bed0db">SELL ITEM</button>
+                    <button class="again">UNBOX AGAIN</button>
+                </div>
+            </div>  `;
+        } else {
+            content =  `
+            <div id="winpopup">
+                    <p class="title">You unboxed</p>
+                    <img src="${item.image}" alt="${item.name}" class="item" onload="this.style.left='calc( 50% - '+ (this.offsetWidth/2) +'px )';this.style.top='calc( 35% - '+ (this.offsetHeight/2) +'px )'">
+                    <p class="name">${item.name}</p>
+                    <p class="price">${item.price}$</p>
+                    <div class="dugmeta">
+                        <button class="sell">SELL ITEM</button>
+                        <button class="again">UNBOX AGAIN</button>
+                    </div>
+            </div>  `;
+        }
+
         let popup = new DOMParser().parseFromString(content,'text/html').querySelector('body #winpopup');
 
         popup.querySelector('button.sell').addEventListener('click',(e) => {
