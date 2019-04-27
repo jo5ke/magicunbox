@@ -152,21 +152,23 @@
     let unboxButton = document.querySelector('#main .row2 button.open');
     let mayWin = document.querySelector("#main .row3 div.items");
 
-    let balance = document.getElementById("balance")
+    let balance = document.getElementById("balance");
     let items;
     let box;
-
     {{#if box}}
         items =  {{{toJSON items}}}
         box = {{{toJSON box}}}
+       // console.log('user:'+{{user}});
+        console.log('box after if:'+box);
+        console.log('items after if:'+items);
         {{#if user}}
-          
-         // testSpin.addEventListener('click',testSpinUnbox);
+            
+            testSpin.addEventListener('click',() => { testSpinUnbox() });
             unboxButton.addEventListener('click', unbox)
             
         {{/if}}
     {{/if}}
-
+    console.log('Items again'+items);
     let allItems=[];
     while(allItems.length<150){
         allItems.push(...items);
