@@ -381,6 +381,8 @@
 
             spinButton.addEventListener("click", unbox);
             spinButton.removeAttribute('disabled')
+            testSpinButton.addEventListener("click", testSpinUnbox);
+            testSpinButton.removeAttribute('disabled'); 
             balance.innerText = parseFloat(balance.innerText.split(' ')[0]) + parseFloat(price)
             balance.innerHTML += ' $'
             popup.remove();
@@ -388,7 +390,9 @@
 
         popup.querySelector('button.again').addEventListener('click',(e)=>{
             spinButton.addEventListener("click", unbox);
-            spinButton.removeAttribute('disabled')
+            spinButton.removeAttribute('disabled');
+            testSpinButton.addEventListener("click", testSpinUnbox);
+            testSpinButton.removeAttribute('disabled');
             popup.remove();
         });
         document.body.appendChild(popup);
