@@ -88,5 +88,22 @@ function showPercentage()
         percentage[i].style.display="none";
     }
     }
+    
+  //  sendEmail('olivervar@hotmail.com','petarchord@hotmail.com','Test email','Send Grid is awesome!');
+    // const msg = 
+    // {
+    //     to: 'petarchord@hotmail.com',
+    //     from:'olivervar@hotmail.com',
+    //     subject:'Test sending',
+    //     text:'Sending with sendgrid is fun',
+    //     html:'<strong> and easy even with node.js</strong>'
+    // };
+
+    // sgMail.MailService.send(msg,false,(err)=> {
+    //     console.log('Error occured while sending the mail'+err);
+    // });
+
+   
 }
+
 

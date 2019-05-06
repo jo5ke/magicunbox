@@ -1,5 +1,9 @@
+let express = require("express");
+const cors = require("cors");
+let app = express();
+app.use(cors());
 const sgMail = require('@sendgrid/mail');
-const API_KEY = "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"
+const API_KEY = "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";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || API_KEY);
 async function sendEmail(from,email,subject,text){
   const msg = {
@@ -9,7 +13,7 @@ async function sendEmail(from,email,subject,text){
     text: text,
     html: text
   };
-  sgMail.send(msg);
+ await sgMail.send(msg);
 }
 
 module.exports = sendEmail;

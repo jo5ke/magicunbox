@@ -224,5 +224,13 @@ body {
     cursor: pointer;
 }
 
+.prices 
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
 
 
