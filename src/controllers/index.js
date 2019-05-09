@@ -167,7 +167,7 @@ module.exports = {
   },
   sendmail: 
   {
-    get(req,res)
+    async get(req,res)
     {
       
       console.log('Message is about to be sent');

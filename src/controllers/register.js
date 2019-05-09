@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const sgMail = require("@sendgrid/mail");
+const uuidv4 = require("uuid/v4");
+
 
 
 
@@ -78,12 +80,15 @@ module.exports = {
       }else{
       let salt = await bcrypt.genSalt(10);
       password = await bcrypt.hash(password, salt);
+      let token = uuidv4().replace(/-/gi, "");
+      console.log('Email token:'+token);
 
       var newUser = await models.user.create({
         email,
         password,
         username,
-        loginType: "standard"
+        loginType: "standard",
+        emailToken:token
       }).then(() => {
         const msg = 
 {
@@ -130,7 +135,7 @@ module.exports = {
                                         <td align="center" valign="middle" style="padding-right:40px;padding-bottom:60px;padding-left:40px">
                                             <table border="0" cellspacing="0" cellpadding="0">
                                                 <tbody><tr>
-                                                    <td align="center" bgcolor="#00004d" id="m_-7309765676424219523m_-4337125242896674519m_-155619913577944892m_-5637489414559323853button"><a href="https://us20.admin.mailchimp.com/signup/confirm?id=e2f90ad967dc619733b8e7556&amp;referral=&amp;eid=7a53c9b494cbb0a49553&amp;kme=Clicked%20Activate%20Account%20Email&amp;kmi=Magicunbox" style="border-radius:0;border:1px solid #007c89;color:#ffffff;display:inline-block;font-size:16px;font-family:'Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;font-weight:400;letter-spacing:.3px;padding:20px;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://us20.admin.mailchimp.com/signup/confirm?id%3De2f90ad967dc619733b8e7556%26referral%3D%26eid%3D7a53c9b494cbb0a49553%26kme%3DClicked%2520Activate%2520Account%2520Email%26kmi%3DMagicunbox&amp;source=gmail&amp;ust=1556988606088000&amp;usg=AFQjCNEbjDn5U-ZOOrrp7azqXoUuepbbMQ">Activate Account</a>
+                                                    <td align="center" bgcolor="#00004d" ><a style="border-radius:0;border:1px solid #007c89;color:#ffffff;display:inline-block;font-size:16px;font-family:'Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;font-weight:400;letter-spacing:.3px;padding:20px;text-decoration:none" href="http://localhost:8111/verification/${token}">Activate Account</a>
                                                     </td>
                                                 </tr>
                                             </tbody></table>
@@ -159,11 +164,11 @@ module.exports = {
     </center>
 </div>`
 };  
-    
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const apiKey='';
+      sgMail.setApiKey(apiKey);
       console.log(process.env.SENDGRID_API_KEY);
       sgMail.send(msg).then(res => {
-
+     
         res.forEach((item,index) =>{
           console.log('item of array:'+item);
         });
@@ -174,12 +179,16 @@ module.exports = {
     })
       });
       req.flash("success_msg", "You are registered and now can login");
-      backURL=req.header('Referer') || '/';
-      res.redirect(backURL);
+   //   backURL=req.header('Referer') || '/';
+        
+  
+       res.redirect('/?toast=true');
     }
     }
   },
-  get: (req, res) => { 
+  get: async (req, res) => {
+    
+    res.send('register route.');
     
     
   }

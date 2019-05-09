@@ -87,23 +87,23 @@ function showPercentage()
     {
         percentage[i].style.display="none";
     }
+    }  
+}
+
+function showToast()
+{
+    var toast = window.location.href.split('?')[1];
+    console.log('Toast:'+toast);
+    if(toast !== '' && toast !== undefined && toast !== null)
+    {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
     }
     
-  //  sendEmail('olivervar@hotmail.com','petarchord@hotmail.com','Test email','Send Grid is awesome!');
-    // const msg = 
-    // {
-    //     to: 'petarchord@hotmail.com',
-    //     from:'olivervar@hotmail.com',
-    //     subject:'Test sending',
-    //     text:'Sending with sendgrid is fun',
-    //     html:'<strong> and easy even with node.js</strong>'
-    // };
 
-    // sgMail.MailService.send(msg,false,(err)=> {
-    //     console.log('Error occured while sending the mail'+err);
-    // });
-
-   
 }
 
 

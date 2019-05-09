@@ -42,5 +42,9 @@ module.exports = [
   {
     path: "/cards",
     handler: require("./routes/card")
+  },
+  {
+    path: "/verification",
+    handler: require("./routes/verification")
   }
 ];
