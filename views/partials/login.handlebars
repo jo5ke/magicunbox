@@ -85,7 +85,37 @@
 <script>
     let loginForm = document.querySelector('#login .login-form');
     let error = document.querySelector("#login-error");
-    loginForm.addEventListener('submit',handleLoginSubmit);
+    //loginForm.addEventListener('submit',handleLoginSubmit);
+    loginForm.addEventListener('submit',checkIfVerified);
+
+    async function checkIfVerified(e){
+            e.preventDefault();
+            let formData = $(loginForm).serializeArray();
+            let data = {};
+            formData.forEach(input=>{
+                data[input['name']] = input['value'];
+            });
+            let response = await fetch("/login/checkVerification",{
+            method:"POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Cache': 'no-cache'
+            },
+            credentials: 'include',
+            body:JSON.stringify(data)
+        });
+        let responseText = JSON.parse(await response.text());
+        console.log(responseText.verified);
+        if(responseText.verified) 
+            handleLoginSubmit(e)
+        else{
+            error.classList.remove('hide');
+            error.querySelector('.data').innerText = "You have to verify your account to sign in";
+            }
+
+    };
+
     async function handleLoginSubmit(e){
         e.preventDefault();
         let formData = $(loginForm).serializeArray();

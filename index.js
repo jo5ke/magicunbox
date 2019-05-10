@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const flash = require("connect-flash");
 const compression = require("compression");
-
+const cors = require("cors");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
@@ -87,6 +87,8 @@ app.engine(
 
 app.use(compression())
 
+app.use(cors());
+
 app.set("view engine", "handlebars");
 //Handlebars.registerPartial('navbar', './views/partials/navbar')
 // Set static folder
@@ -148,6 +150,13 @@ app.use(
     }
   })
 );
+/*
+app.get('/sendmail',(req,res)=> {
+  res.send('Welcome to sendgrid email server.');
+
+}); */
+
+
 
 let router = require("./src/router");
 router.forEach(route => {

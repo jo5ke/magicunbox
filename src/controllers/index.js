@@ -1,4 +1,5 @@
 const models = require("../../models");
+const sendEmail = require("../../utils/sendEmail").sendEmail;
 
 module.exports = {
   index: {
@@ -163,5 +164,22 @@ module.exports = {
     req.flash("success_msg", "You are logged out");
     backURL=req.header('Referer') || '/';
     res.redirect(backURL);
+  },
+  sendmail: 
+  {
+    async get(req,res)
+    {
+      
+      console.log('Message is about to be sent');
+      sendEmail('olivervar@hotmail.com','petarchord@hotmail.com','test mail','this will work!').then(res =>{
+        console.log('Message is sent'+res);
+      }).catch(err => {
+        console.log('Message is not sent'+err);
+      });
+
+      res.send("Welcome to sendgrid mail server.");
+
+    }
+
   }
 };

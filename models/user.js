@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       
       topSize: DataTypes.STRING,
       bottomSize: DataTypes.STRING, 
-      sneakerSize: DataTypes.STRING
+      sneakerSize: DataTypes.STRING,
+      emailToken: DataTypes.STRING,
+      verified: DataTypes.BOOLEAN
     },
     {}
   );

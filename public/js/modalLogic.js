@@ -87,6 +87,23 @@ function showPercentage()
     {
         percentage[i].style.display="none";
     }
-    }
+    }  
 }
+
+function showToast()
+{
+    var toast = window.location.href.split('?')[1];
+    console.log('Toast:'+toast);
+    if(toast !== '' && toast !== undefined && toast !== null)
+    {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+    }
+    
+
+}
+
 
