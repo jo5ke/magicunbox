@@ -105,14 +105,38 @@
             credentials: 'include',
             body:JSON.stringify(data)
         });
-        let responseText = JSON.parse(await response.text());
-        console.log(responseText.verified);
-        if(responseText.verified) 
+     
+          
+        /*  let responseRes = JSON.parse(response);
+          console.log("ResponseRes"+responseRes);
+          console.log("Response status:"+responseRes.status); */
+        let resText = await response.text();
+        let resJson = JSON.parse(resText);
+        console.log('Response text:'+resText);
+        console.log('Response text:'+resJson.userStatus);
+        switch(resJson.userStatus)
+        {
+            case 0: 
+            error.classList.remove('hide');
+            error.querySelector('.data').innerText = "Invalid email/password";
+            break;
+            case 1:
+            handleLoginSubmit(e);
+            break;
+            case 2:
+            error.classList.remove('hide');
+            error.querySelector('.data').innerText = "You have to verify your account to sign in";
+            break;
+
+
+
+        }
+    /*    if(responseText.verified) 
             handleLoginSubmit(e)
         else{
             error.classList.remove('hide');
             error.querySelector('.data').innerText = "You have to verify your account to sign in";
-            }
+            } */
 
     };
 

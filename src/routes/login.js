@@ -7,7 +7,7 @@ const passport = require("passport");
 // Standard
 router.post("/", Controller.standard.auth, Controller.standard.post);
 
-router.post("/checkVerification", Controller.standard.auth, Controller.checkVerification.post);
+router.post("/checkVerification", Controller.checkVerification.post);
 
 // Twitter
 router.get('/twitter', Controller.twitter.get);

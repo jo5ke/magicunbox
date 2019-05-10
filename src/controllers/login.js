@@ -65,17 +65,30 @@ module.exports = {
   },checkVerification: {
       post: async (req, res) => {
       console.log(' ');
-      console.log('email:'+req.body.email);
+      console.log('****email:'+req.body.email);
       console.log(' ');
       let user = await models.user.findOne({where:{email:req.body.email}});
-      if(user.verified)
+      console.log('****the result from database:'+user);
+      var userStatus = 0;
+      if(user)
       {
-        res.send({verified:true});
+          if(user.verified)
+        {
+          userStatus=1; //user is verified
+       //   res.send({status:1});
+        }
+        else
+        {
+          userStatus=2; //user is not verified
+      //    res.send({status:2});
+        }
+
       }
-      else
-      {
-        res.send({verified:false});
-      }
+      //user does not exist
+      res.send({userStatus:userStatus});
+
+
+      
     }
   }
 };
