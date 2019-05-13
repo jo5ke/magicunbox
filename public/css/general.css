@@ -226,9 +226,11 @@ body {
 
 .prices 
 {
+    
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
 }
 
@@ -277,6 +279,22 @@ body {
   @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
+  }
+
+
+  #realPrice
+  {
+    text-decoration: line-through black;
+    margin-right: 3px;
+    
+  }
+
+  #salePrice
+  {
+    font-size: 20px;
+    color: crimson;
+    margin-left: 3px;
+    
   }
 
 

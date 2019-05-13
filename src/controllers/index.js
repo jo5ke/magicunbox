@@ -1,9 +1,11 @@
 const models = require("../../models");
-const sendEmail = require("../../utils/sendEmail").sendEmail;
+const moment = require("moment");
+
 
 module.exports = {
   index: {
     async get(req, res) {
+      console.log("Moment time:"+moment().format("HH mm SS"));
       let user = null
       if(req.user)
         user = await models.user.findOne({

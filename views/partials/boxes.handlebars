@@ -15,24 +15,30 @@
                                 "
                             >
                     </div>
-                    <div class="card-content box-card-content">
+                    <div class="card-content box-card-content" style="padding:18px;">
+                        
                         <span>
                             {{this.name}}
                         </span>
-                        <br/>
+                        <br/>     
+                        {{#if this.salesPrice}}
                         <div class="prices">
+                            <span id="realPrice">
+                            {{this.price}} $
+                            </span>
+                            <span id="salePrice">
+                            {{this.salesPrice}} $
+                            </span>
+                        </div>
+                        {{else}}
                             <span>
                             {{this.price}} $
                             </span>
-                            <span>
-                            {{this.salesPrice}} $
-                            </span>
-
-                        </div>
+                        {{/if}}
                         
                        
                     </div>
-                    <a href="boxes/{{this.name}}" class="waves-effect waves-light btn unbox-btn" style="background: linear-gradient(to right, #293544, #1c3c53, #09161f);">UNBOX</a>
+                    <a href="boxes/{{this.name}}" class="waves-effect waves-light btn unbox-btn" style="position: absolute; top: 205px; left: 0px; background: linear-gradient(to right, #293544, #1c3c53, #09161f);">UNBOX</a>
             </div>
         </div>
         {{/each}}

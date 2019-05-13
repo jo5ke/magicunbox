@@ -9,6 +9,8 @@ module.exports = {
         box: {
           name: item.dataValues.name,
           price: item.dataValues.price,
+          salesPrice: item.dataValues.salesPrice,
+          salesDuration:item.dataValues.salesDuration,
           id: item.id,
           active: item.active
         }
@@ -111,7 +113,9 @@ module.exports = {
       let price = req.body.price;
       let result = await models.box.update({
         name,
-        price
+        price,
+        salesPrice:req.body.salesPrice,
+        salesDuration:req.body.salesDuration
       },{
         where:{
           id:boxId
