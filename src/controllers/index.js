@@ -2,10 +2,10 @@ const models = require("../../models");
 const moment = require("moment");
 
 
+
 module.exports = {
   index: {
     async get(req, res) {
-      console.log("Moment time:"+moment().format("HH mm SS"));
       let user = null
       if(req.user)
         user = await models.user.findOne({
@@ -26,7 +26,8 @@ module.exports = {
           ],
           order: [['createdAt', 'DESC']],
           limit: 20
-        })
+        });
+        
         promoters = await models.promoter.findAll()
         registeredUsers = await models.user.count()
         registeredUsers += 11352

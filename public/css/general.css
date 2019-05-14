@@ -297,5 +297,12 @@ body {
     
   }
 
+  .counter
+  {
+    display: block;
+    font-size: 30px;
+    color: antiquewhite;
+  }
+
 
 

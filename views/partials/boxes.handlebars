@@ -16,7 +16,9 @@
                             >
                     </div>
                     <div class="card-content box-card-content" style="padding:18px;">
-                        
+                        {{#if this.salesPrice}}
+                        <p class="counter"></p>
+                        {{/if}}
                         <span>
                             {{this.name}}
                         </span>
