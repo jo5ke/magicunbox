@@ -62,17 +62,15 @@ var saleArray = document.getElementsByClassName("salesDuration");
 var cnt = document.getElementsByClassName("counter");
 var salePrices = document.getElementsByClassName("prices");
 var initialPrices = document.getElementsByClassName("initialPrice");
-var currentTimeSec = new Date(Date.now()).getTime();
-console.log("Current time in miliseconds:"+currentTimeSec);
+var currentTimeMils = new Date(Date.now()).getTime();
+console.log("Current time in miliseconds:"+currentTimeMils);
 
 var pomArray = [];
 for(var i=0;i<saleArray.length;i++)
 {
-        var promEnd = saleArray[i].name;
-        var promEndDate = new Date(promEnd.toString());
-        console.log('promEnd:'+promEndDate.getSeconds());
-        promEndSec = promEndDate.getTime();
-        var counter=Math.floor((promEndSec - currentTimeSec)/1000);
+        var promEndDate = new Date(saleArray[i].name.toString());
+        promEndMils = promEndDate.getTime();
+        var counter=Math.floor((promEndMils - currentTimeMils)/1000);
         pomArray[i]=counter;
         let hour = Math.floor(counter/3600);
         let remainder = counter - hour*3600;
