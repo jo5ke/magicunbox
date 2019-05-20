@@ -1,78 +1,84 @@
-    <nav style="background-image: linear-gradient(to right, #293544, #1c3c53, #09161f);">
-        <div class="nav-wrapper">
+<nav style="background-image: linear-gradient(to right, #293544, #1c3c53, #09161f);">
+    <div class="nav-wrapper">
 
-            <a href="/" class="brand-logo center">
-                <img src="/img/navbarlogo.png" style="height: 150px; margin-top: -30px;">
-            </a>
+        <a href="/" class="brand-logo center">
+            <img src="/img/navbarlogo.png" style="height: 150px; margin-top: -30px;">
+        </a>
 
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-            <ul id="nav-mobile" class="right hide-on-med-and-down" >
-                {{#if user}}
-                <li>
-                    <span id="balance" style="font-family: 'Russo One', sans-serif; font-size: 15px; padding:4px; background:#216C2A; border-radius:7px;">
-                        {{user.balance}} $
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {{#if user}}
+            <li>
+                <span id="balance"
+                    style="font-family: 'Russo One', sans-serif; font-size: 15px; padding:4px; background:#216C2A; border-radius:7px;">
+                    {{user.balance}} $
+                </span>
+            </li>
+            <li>
+                <a class="pulse waves-effect waves-light btn navbar-btn"
+                    style="120px;font-family: 'Quicksand', sans-serif; font-size:15px; box-shadow: 0px 0px 15px #20A4F3;"
+                    onclick="openPaymentModal();">
+                    ADD FUNDS
+                </a>
+            </li>
+            <li>
+                <a href="/profile" style="display:flex; align-items:center;">
+                    <img style="height:40px; border-radius:50%;" src="{{user.profileImage}}">
+                    <span style="padding-left: 10px; font-family: 'Russo One', sans-serif; font-size: 15px;">
+                        {{user.username}}
                     </span>
-                </li>
-                <li>
-                    <a  class="pulse waves-effect waves-light btn navbar-btn" 
-                        style="120px;font-family: 'Quicksand', sans-serif; font-size:15px; box-shadow: 0px 0px 15px #20A4F3;" 
-                        onclick="openPaymentModal();"
-                    >
-                        ADD FUNDS
-                    </a>
-                </li>
-                <li>
-                    <a href="/profile"style="display:flex; align-items:center;">
-                        <img style="height:40px; border-radius:50%;" src="{{user.profileImage}}">
-                        <span style="padding-left: 10px; font-family: 'Russo One', sans-serif; font-size: 15px;">
-                            {{user.username}}
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/logout" class="waves-effect waves-light btn navbar-btn" style="margin-right: 20px;font-family: 'Quicksand', sans-serif; font-size:15px;">LOGOUT</a>
-                </li>
-                {{else}}
+                </a>
+            </li>
+            <li>
+                <a href="/logout" class="waves-effect waves-light btn navbar-btn"
+                    style="margin-right: 20px;font-family: 'Quicksand', sans-serif; font-size:15px;">LOGOUT</a>
+            </li>
+            {{else}}
 
-                
-                <div id="snackbar">We sent you an email with activaion link. Check your inbox and activate your account.</div>
-                <li>
-                    <a onclick="openLoginModal();" class="waves-effect waves-light btn navbar-btn" style="font-family: 'Quicksand', sans-serif; font-size: 15px;">LOG IN</a>
-                </li>
-                <li>
-                    <a onclick="openRegisterModal();" class="waves-effect waves-light btn navbar-btn" style="margin-right: 120px;font-family: 'Quicksand', sans-serif; font-size:15px;">REGISTER</a>
-                </li>
-                {{/if}}
-            </ul>      
 
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <div id="snackbar">We sent you an email with activaion link. Check your inbox (or spam) and activate your
+                account.</div>
+            <li>
+                <a onclick="openLoginModal();" class="waves-effect waves-light btn navbar-btn"
+                    style="font-family: 'Quicksand', sans-serif; font-size: 15px;">LOG IN</a>
+            </li>
+            <li>
+                <a onclick="openRegisterModal();" class="waves-effect waves-light btn navbar-btn"
+                    style="margin-right: 120px;font-family: 'Quicksand', sans-serif; font-size:15px;">REGISTER</a>
+            </li>
+            {{/if}}
+        </ul>
 
-                <li style="margin-left: 140px;">
-                    <div style="display: inline;">
-                        <i style="display: inherit;" class="material-icons inline-icon">people</i>
-                        <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{registeredUsers}}</span>
-                    </div>
-                </li>
-                <li style="margin-left: 70px;">
-                    <div style="display: inline;">
-                        <i style="display: inline;" class="material-icons inline-icon">person</i> 
-                        <span id="onlineUsers" style="display: inherit; font-family: 'Roboto', sans-serif;">1</span>
-                    </div>
-                </li>
-                <li style="margin-left: 70px;">
-                    <div style="display: inline;">
-                        <i style="display: inline;" class="material-icons inline-icon">casino</i> 
-                        <span id="dropsCount" style="display: inherit; font-family: 'Roboto', sans-serif;">{{dropsCount}}</span>
-                    </div>
-                </li>
-            </ul>  
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
 
-    <div class="drops-truck-holder" style="    position: absolute;top: 65px;right: 120px;display: flex;align-items: center;width: 20%;z-index:4">
-        <img src="/img/delivery-truck2.png" alt="" style="width:65%">
-        <img src="/img/gif-truck.gif" alt="" style="width:60%">
-    </div>    
+            <li style="margin-left: 140px;">
+                <div style="display: inline;">
+                    <i style="display: inherit;" class="material-icons inline-icon">people</i>
+                    <span style="display: inherit; font-family: 'Roboto', sans-serif;">{{registeredUsers}}</span>
+                </div>
+            </li>
+            <li style="margin-left: 70px;">
+                <div style="display: inline;">
+                    <i style="display: inline;" class="material-icons inline-icon">person</i>
+                    <span id="onlineUsers" style="display: inherit; font-family: 'Roboto', sans-serif;">1</span>
+                </div>
+            </li>
+            <li style="margin-left: 70px;">
+                <div style="display: inline;">
+                    <i style="display: inline;" class="material-icons inline-icon">casino</i>
+                    <span id="dropsCount"
+                        style="display: inherit; font-family: 'Roboto', sans-serif;">{{dropsCount}}</span>
+                </div>
+            </li>
+        </ul>
 
+        <div class="drops-truck-holder"
+            style="    position: absolute;top: 65px;right: 120px;display: flex;align-items: center;width: 20%;z-index:4">
+            <img src="/img/delivery-truck2.png" alt="" style="width:65%">
+            <img src="/img/gif-truck.gif" alt="" style="width:60%">
         </div>
-    </nav>
-    {{> snow}}
+
+    </div>
+</nav>
+{{> snow}}
