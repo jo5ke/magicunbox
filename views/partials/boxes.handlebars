@@ -1,7 +1,7 @@
 <div class="container" id="boxes">
     <div class="row flex" >
         {{#each boxes}}
-        <div class="col ">
+        <div class="col">
             <div class="card box-card z-depth-0">
                     <div class="card-image">
                         <img class="box-zoom" src="img/boxes/{{this.image}}" 
@@ -15,26 +15,164 @@
                                 "
                             >
                     </div>
-                    <div class="card-content box-card-content">
+                    <div class="card-content box-card-content" style="padding:18px;">                       
+                        {{#if this.salesDuration}}
+                        <div class="counter">
+                            <div class="childCnt"></div>
+                            <div class="childCnt"></div>
+                            <div class="childCnt"></div>
+                        </div>
+                        <input type="hidden" name="{{this.salesDuration}}" class="salesDuration">
+                        {{/if}} 
+                    
                         <span>
                             {{this.name}}
                         </span>
-                        <br/>
+                        <br/>   
+                     <!--   <p>{{this.salesDuration}}</p>  -->
+                        {{#if this.salesDuration}}
                         <div class="prices">
+                            <span id="realPrice">
+                            {{this.price}} $
+                            </span>
+                            <span id="salePrice">
+                            {{this.salesPrice}} $
+                            </span>
+                        </div>
+                        <span class="initialPrice" style="display:none">
+                            {{this.price}} $
+                        </span>
+                        {{else}}
                             <span>
                             {{this.price}} $
                             </span>
-                            <span>
-                            {{this.salesPrice}} $
-                            </span>
-
-                        </div>
+                        {{/if}}
                         
                        
                     </div>
-                    <a href="boxes/{{this.name}}" class="waves-effect waves-light btn unbox-btn" style="background: linear-gradient(to right, #293544, #1c3c53, #09161f);">UNBOX</a>
+                    <a href="boxes/{{this.name}}" class="waves-effect waves-light btn unbox-btn" style="position: absolute; top: 205px; left: 0px; background: linear-gradient(to right, #293544, #1c3c53, #09161f);">UNBOX</a>
             </div>
         </div>
         {{/each}}
     </div>
 </div>
+
+<script>
+var saleArray = document.getElementsByClassName("salesDuration");
+var cnt = document.getElementsByClassName("counter");
+var salePrices = document.getElementsByClassName("prices");
+var initialPrices = document.getElementsByClassName("initialPrice");
+var pomArray = [];
+var childs = cnt[0].childNodes;
+childs.forEach((item)=>
+{
+    console.log('item of childs:'+item);
+})
+for(var i=0;i<saleArray.length;i++)
+{
+    
+        var counter=saleArray[i].name * 86400;
+        pomArray[i]=counter;
+        let hour = Math.floor(counter/3600);
+        let remainder = counter - hour*3600;
+        let min = Math.floor(remainder/60);
+        let remainderMin = remainder - min*60;
+        let sec = remainderMin % 60;
+        var childs = cnt[i].childNodes;
+        console.log('childs:'+childs);
+        childs[1].innerHTML=hour;
+        childs[3].innerHTML=min;
+        childs[5].innerHTML = sec;
+   /* console.log("counter:"+counter);
+    var intervalID = setInterval(convertSec,1000,counter,i);
+    console.log("intervalID:"+intervalID); */
+}
+pomArray.forEach((item,index)=>{
+    console.log("pomArray"+"["+index+"]"+":"+item);
+})
+var maxInd=0;
+for(var i=0;i<pomArray.length;i++)
+{
+    if(pomArray[i] > pomArray[maxInd])
+    {
+        maxInd = i;
+    }
+}
+
+console.log("Max element is:"+pomArray[maxInd]);
+
+
+var intervalID = setInterval(convertSec,1000);
+
+function convertSec()
+{
+    for (var i=0;i<pomArray.length;i++)
+    {
+        var s=pomArray[i];
+        console.log("value of s:"+s);
+        if(pomArray[maxInd] != 0)
+        {
+            let hour = Math.floor(s/3600);
+            let remainder = s - hour*3600;
+            let min = Math.floor(remainder/60);
+            let remainderMin = remainder - min*60;
+            let sec = remainderMin % 60;
+            if(hour == 0 && min == 0 && sec == 0)
+            {
+                salePrices[i].style.display = "none";
+                initialPrices[i].style.display = "block";
+                cnt[i].style.display = "none";
+            }
+          //  cnt[i].innerHTML=hour+":"+min+":"+sec;
+            cnt[i].childNodes[1].innerHTML=hour;
+            cnt[i].childNodes[3].innerHTML=min;
+            cnt[i].childNodes[5].innerHTML=sec;
+            s--;
+            pomArray[i]=s;
+
+        }
+        else
+        {
+            cnt[maxInd].style.display = "none";
+            salePrices[maxInd].style.display = "none";
+            initialPrices[maxInd].style.display = "block";
+            clearInterval(intervalID);
+            
+        }
+        
+
+    }
+    
+
+/*  
+     console.log('passed value'+s);
+     console.log("cnd:"+sessionStorage.getItem("cnd"));
+     if(sessionStorage.getItem("cnd"))
+    {
+        s=sessionStorage.getItem("cnt"); 
+           
+    } 
+    
+    if(s)
+    {
+        let hour = Math.floor(s/3600);
+        let remainder = s - hour*3600;
+        let min = Math.floor(remainder/60);
+        let remainderMin = remainder - min*60;
+        let sec = remainderMin % 60;
+        if()
+        cnt[i].innerHTML=hour+":"+min+":"+sec;
+        s--;
+        console.log("passed value after decrement:"+s);
+        sessionStorage.setItem("cnt",s);
+        sessionStorage.setItem("cnd",true);
+
+    }
+    else
+    {
+        
+        clearInterval(intervalID);
+    } */
+    
+}
+</script>

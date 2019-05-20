@@ -1,5 +1,7 @@
 const models = require("../../models");
-const sendEmail = require("../../utils/sendEmail").sendEmail;
+const moment = require("moment");
+
+
 
 module.exports = {
   index: {
@@ -24,7 +26,8 @@ module.exports = {
           ],
           order: [['createdAt', 'DESC']],
           limit: 20
-        })
+        });
+        
         promoters = await models.promoter.findAll()
         registeredUsers = await models.user.count()
         registeredUsers += 11352

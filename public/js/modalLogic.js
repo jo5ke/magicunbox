@@ -1,3 +1,5 @@
+
+
 let login = document.getElementById("login")
 let loginModal = M.Modal.init(login);
 
@@ -105,5 +107,31 @@ function showToast()
     
 
 }
+/* async function returnSaleBoxes()
+{
+    let saleBoxes = await models.box.findAll({
+        attributes: ['salesDuration','order']  ,
+        where: {
+            salesDuration:
+            {
+                [Op.gt]:0
+            }
+            
+        }
+    });
+
+    return saleBoxes;
+
+}
+
+let saleBoxes = returnSaleBoxes(); */
+
+
+
+
+
+ 
+
+
 
 

@@ -226,9 +226,11 @@ body {
 
 .prices 
 {
+    
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
 }
 
@@ -278,6 +280,44 @@ body {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
   }
+
+
+  #realPrice
+  {
+    text-decoration: line-through black;
+    margin-right: 3px;
+    
+  }
+
+  #salePrice
+  {
+    font-size: 20px;
+    color: crimson;
+    margin-left: 3px;
+    
+  }
+
+  .counter
+  {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    color: antiquewhite;
+  }
+
+  .childCnt
+  {
+   
+    font-size: 21px;
+    margin: 3px;
+    /* border-color: black; */
+    background-color: mediumpurple;
+    border-radius: 5px;
+    padding: 4px;
+    /* width: 30px; */
+  }
+
+  
 
 
 

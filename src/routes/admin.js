@@ -7,13 +7,13 @@ let shippingController = require('../controllers/admin-shipping');
 let usersController = require('../controllers/admin-users');
 const accessLevelCheck = require('../../utils/adminMiddleware')
 
-router.get("/",accessLevelCheck, Controller.get);
-router.get("/box/:name", accessLevelCheck,Controller.box.get);
+router.get("/", Controller.get);
+router.get("/box/:name", Controller.box.get);
 router.put('/box',accessLevelCheck,Controller.box.updateBox)
 router.put('/box/:id',accessLevelCheck,Controller.box.update)
 router.put('/box/active/:id',accessLevelCheck,Controller.box.active);
 
-router.get("/items",accessLevelCheck, Items.get); //deda
+router.get("/items", Items.get); //deda
 router.put("/items/:id",accessLevelCheck, Items.edit); //deda
 
 router.post("/items",accessLevelCheck,Controller.item.add);
