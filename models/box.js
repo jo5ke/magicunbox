@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       image:DataTypes.STRING,
       discount: DataTypes.DOUBLE,
       active: DataTypes.BOOLEAN,
-      order: DataTypes.INTEGER
+      order: DataTypes.INTEGER,
+      promotionEnd: DataTypes.DATE
+
     },
     {}
   );
