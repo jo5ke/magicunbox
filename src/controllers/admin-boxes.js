@@ -111,11 +111,16 @@ module.exports = {
       let boxId = req.body.boxId;
       let name = req.body.name;
       let price = req.body.price;
+      let salesDuration = req.body.salesDuration;
+      let promotionEnd = new Date(Date.now() +salesDuration*24*3600*1000);
+      console.log("promotionEnd:"+promotionEnd);
+      console.log("promotion end string:"+promotionEnd.toString());
       let result = await models.box.update({
         name,
         price,
         salesPrice:req.body.salesPrice,
-        salesDuration:req.body.salesDuration
+        salesDuration:req.body.salesDuration,
+        promotionEnd:promotionEnd
       },{
         where:{
           id:boxId

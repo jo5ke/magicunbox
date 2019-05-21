@@ -22,7 +22,7 @@
                             <div class="childCnt"></div>
                             <div class="childCnt"></div>
                         </div>
-                        <input type="hidden" name="{{this.salesDuration}}" class="salesDuration">
+                        <input type="hidden" name="{{this.promotionEnd}}" class="salesDuration">
                         {{/if}} 
                     
                         <span>
@@ -62,16 +62,15 @@ var saleArray = document.getElementsByClassName("salesDuration");
 var cnt = document.getElementsByClassName("counter");
 var salePrices = document.getElementsByClassName("prices");
 var initialPrices = document.getElementsByClassName("initialPrice");
+var currentTimeMils = new Date(Date.now()).getTime();
+console.log("Current time in miliseconds:"+currentTimeMils);
+
 var pomArray = [];
-var childs = cnt[0].childNodes;
-childs.forEach((item)=>
-{
-    console.log('item of childs:'+item);
-})
 for(var i=0;i<saleArray.length;i++)
 {
-    
-        var counter=saleArray[i].name * 86400;
+        var promEndDate = new Date(saleArray[i].name.toString());
+        promEndMils = promEndDate.getTime();
+        var counter=Math.floor((promEndMils - currentTimeMils)/1000);
         pomArray[i]=counter;
         let hour = Math.floor(counter/3600);
         let remainder = counter - hour*3600;
