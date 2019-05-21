@@ -118,16 +118,52 @@ module.exports = {
           id: req.user.id
         }
       });
+      var onPromotion = false;
+      if(box.promotionEnd)
+      {
+          var currentTimeMils = new Date(Date.now()).getTime();
+          var promotionEndMils = new Date(box.promotionEnd.toString()).getTime();
+          if(currentTimeMils < promotionEndMils)
+          {
+              onPromotion = true;
+              if(user.balance < box.salesPrice)
+              {
+                  return res.status(403).json(
+                    {
+                      error:true,
+                      data:null,
+                      message:"Not enough money"
 
-      if (user.balance < box.price) {
+                    }
+                  );
+              }
+             
+          }
+
+      }
+      if (!onPromotion && user.balance < box.price) 
+      {
         return res.status(403).json({
           error: true,
           data: null,
           message: "Not enough money"
         });
-      } else {
-        await user.decrement("balance", { by: box.price });
-
+      
+      }
+       else 
+       {
+         var boxPrice;
+        if(!onPromotion)
+        { 
+          await user.decrement("balance", { by: box.price });
+          boxPrice = box.price;
+        }
+        else
+        {
+          await user.decrement("balance", { by: box.salesPrice });
+          boxPrice = box.salesPrice;
+        }
+        
         let weightSum = 0;
         box.boxitems.sort((a, b) => a.weight - b.weight);
         let previousBoxItem = null;
@@ -167,7 +203,7 @@ module.exports = {
           data: {
             item: result.item,
             dropId: drop.id,
-            boxPrice: box.price
+            boxPrice: boxPrice
           },
           message: "successfull retrieval"
         });
