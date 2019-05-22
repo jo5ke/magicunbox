@@ -14,11 +14,15 @@ module.exports = {
       price: {
         type: Sequelize.DOUBLE
       },
-      image:{
+      image: {
         type: Sequelize.STRING
       },
-      description:{
+      description: {
         type: Sequelize.STRING
+      },
+      winningChances: {
+        type: Sequelize.DOUBLE,
+        allowNull: true
       },
       createdAt: {
         allowNull: true,

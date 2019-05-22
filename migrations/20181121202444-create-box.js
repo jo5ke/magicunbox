@@ -14,19 +14,23 @@ module.exports = {
       price: {
         type: Sequelize.DOUBLE
       },
-      image:{
+      salesPrice: {
+        type: Sequelize.DOUBLE,
+        allowNull: true
+      },
+      image: {
         type: Sequelize.STRING
       },
-      discount:{
+      discount: {
         type: Sequelize.DOUBLE,
         allowNull: true,
         defaultValue: 0
       },
-      active:{
+      active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
-      } ,    
-      order:{
+      },
+      order: {
         type: Sequelize.INTEGER,
         defaultValue: 1
       },
