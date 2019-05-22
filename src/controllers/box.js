@@ -19,7 +19,7 @@ module.exports = {
       box.boxitems.forEach(boxitem => {
         items.push(boxitem.item);
       });
-      box = {id:box.id,name:box.name,price:box.price, image: box.image};
+      box = {id:box.id,name:box.name,price:box.price, image: box.image, promotionEnd:box.promotionEnd ,salesPrice:box.salesPrice};
       items = items.map(item=>{console.log(item)
         return{
           id: item.id,
@@ -62,6 +62,27 @@ module.exports = {
           testSpin = true;
         }
       }
+
+      
+      if(box.promotionEnd)
+      {
+        var currentTimeMils = new Date(Date.now()).getTime();
+        var promotionMils = new Date(box.promotionEnd.toString()).getTime();
+        if(currentTimeMils < promotionMils)
+        {
+          box.onPromotion = true;
+        }
+        else
+        {
+          box.onPromotion = false;
+        }
+
+      }
+      else
+      {
+          box.onPromotion = false;
+      }
+      
 
       res.render("box", {dropsCount, box, items , drops, user, registeredUsers, testSpin});
     }

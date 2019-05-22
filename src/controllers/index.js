@@ -28,11 +28,34 @@ module.exports = {
           limit: 20
         });
         
+        var currentTimeMils = new Date(Date.now()).getTime();
+        boxes.forEach((item,index)=>
+        {
+          if(item.promotionEnd)
+          {
+              var promotionMils = new Date(item.promotionEnd.toString()).getTime();
+              if(currentTimeMils < promotionMils)
+              {
+                  item.onPromotion = true;
+              }
+              else
+              {
+                  item.onPromotion = false;
+              }
+              
+
+          }
+          else
+          {
+              item.onPromotion = false;
+          }       
+        })
+        
         promoters = await models.promoter.findAll()
         registeredUsers = await models.user.count()
         registeredUsers += 11352
         dropsCount = 21347 + await models.inventory.count()
-      return res.render("homepage", { user, boxes, drops, promoters, registeredUsers, dropsCount});
+        return res.render("homepage", { user, boxes, drops, promoters, registeredUsers, dropsCount});
     }
   },
   profileSlug: {

@@ -61,8 +61,11 @@
             <script>
                 let boxnameForm = document.querySelector("#boxnameForm");
                 boxnameForm.addEventListener('submit',handleBoxNameFormSubmit);
-                async function handleBoxNameFormSubmit(e){
+                async function handleBoxNameFormSubmit(e)
+                {
                     e.preventDefault();
+                  /*  let salesDuration = document.getElementById("boxSaleDuration");
+                    salesDuration.onchange = function() */
                     let boxId = {{boxitems.id}};
                     let formData = $(boxnameForm).serializeArray();
                     let data = {boxId};

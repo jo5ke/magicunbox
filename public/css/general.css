@@ -317,6 +317,32 @@ body {
     /* width: 30px; */
   }
 
+.promoPrice
+  {
+    font-family: Russo One;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 30px;
+    color: #2B2930;
+  }
+
+#realPricePromo
+{
+  text-decoration: line-through black;
+  margin-right: 3px;
+
+}
+
+#salePricePromo
+{
+
+  font-size: 30px;
+  color: crimson;
+  margin-left: 3px;
+
+}
+
   
 
 

@@ -53,7 +53,18 @@
                     <img src="/img/boxes/{{box.image}}" alt="xx">
                     <div class="data">
                         <p class="title">{{box.name}}</p>
+                        {{#if box.onPromotion}}
+                        <div class="prices promoPrice">
+                            <span id="realPricePromo">
+                            {{box.price}} $
+                            </span>
+                            <span id="salePricePromo">
+                            {{box.salesPrice}} $
+                            </span>
+                        </div>
+                        {{else}}
                         <p class="price">{{box.price}}$</p>
+                        {{/if}}
                     </div>
                 </div>  
             </div>
