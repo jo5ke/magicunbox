@@ -3,9 +3,9 @@ const paypal = require('paypal-rest-sdk');
 
 //iamgboo
 paypal.configure({
-  'mode': 'live', //sandbox or live
-  'client_id': 'ASbfeeukQD9nzTHBW8c3vM3b-oB4R_hoZvNXkHY2TnBVchKkvOxFg8ObUo0eb7owaUPLnprIHZ1OS5nS',
-  'client_secret': 'ELyniw0mTOmO34k9AwGoUoD7Vi4dkpHV0jelueJDkGxRC2B84TIalw1W22z_K9_68VVtiqoS1YKoxipa'
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'ASEBOx4aKR8ml2_K6t1L8tsV1rOgMIDsFrawfJvZYQxhKBv--hCnLFl7xVkuO95PFrcBt_T9tN-HVVCs',
+  'client_secret': 'EIdgI6TsPcI7FQBTM_yCP7QZbTN_FKPXjEXq6g2QcuWAb9-CHuIFxEInS-RNH8S519gC1qr2znkTDx0V'
 });
 
 //gunboxceo
@@ -35,24 +35,26 @@ module.exports = {
         if(code) {
           affiliate = await models.user.findOne({where: {code: code}})
         }
-        console.log(affiliate)
-        var create_payment_json = {
+        console.log("amount:"+amount);
+        console.log('affiliate:'+affiliate)
+        /*
+        const create_payment_json = {
           "intent": "sale",
           "payer": {
               "payment_method": "paypal"
           },
           "redirect_urls": {
-              "return_url": "https://magicunbox.com/paypal/success",
-              "cancel_url": "https://magicunbox.com"
+              "return_url": "http://localhost:8111/success",
+              "cancel_url": "http://localhost:8111/cancel"
           },
           "transactions": [{
               "item_list": {
                   "items": [{
                       "name": "Balance",
-                      "sku": "Balance",
+                      "sku": "001",
                       "price": "1.00",
                       "currency": "USD",
-                      "quantity": amount
+                      "quantity": "1"
                   }]
               },
               "amount": {
@@ -61,14 +63,44 @@ module.exports = {
               },
               "description": "This is the payment description."
           }]
-        };
+        }; */
+        var create_payment_json = {
+          "intent": "sale",
+          "payer": {
+              "payment_method": "paypal"
+          },
+          "redirect_urls": {
+              "return_url": "http://localhost:8111/paypal/success",
+              "cancel_url": "http://localhost:8111/paypal/cancel"
+          },
+          "transactions": [{
+              "item_list": {
+                  "items": [{
+                      "name": "item",
+                      "sku": "item",
+                      "price": amount.toString(),
+                      "currency": "USD",
+                      "quantity": 1
+                  }]
+              },
+              "amount": {
+                  "currency": "USD",
+                  "total": amount.toString()
+              },
+              "description": "This is the payment description."
+          }]
+      };
+
+
+
         paypal.payment.create(create_payment_json, async function (error, payment) {
             if (error) {
-                console.log("error")
+                console.log("error:"+error)
                 return res.status(403).json({
                   error: true,
                   message: "Error"
-                });
+                }); 
+              
             } else {
               console.log(payment)
               let transaction = await models.transaction.create({
@@ -79,7 +111,8 @@ module.exports = {
                 status: 0
               })
               for(let i = 0;i < payment.links.length;i++){
-                if(payment.links[i].rel === 'approval_url'){
+                if(payment.links[i].rel === 'approval_url')
+                {
                   res.redirect(payment.links[i].href);
                 }
               }
@@ -88,7 +121,8 @@ module.exports = {
 
       }
     },
-    success: {
+      success: 
+      {
       get: async (req, res) => {
       const payerId = req.query.PayerID;
       const paymentId = req.query.paymentId;

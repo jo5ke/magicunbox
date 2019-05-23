@@ -107,7 +107,7 @@ module.exports = {
         });
       }
     },
-    updateBox: async(req,res)=>{
+  updateBox: async(req,res)=>{
       let boxId = req.body.boxId;
       let name = req.body.name;
       let price = req.body.price;
