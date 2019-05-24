@@ -16,12 +16,9 @@
               <!--  <div class="greenBox apm"><i style="font-size:30px; color:#8FCF4C">Curently Not Available!</i></div> -->
                 <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 20px; height:36px; ">
                     <input class="browser-default valueInput" style="text-align:center;font-size:17px;width:140px;"  id="paypal-amount" placeholder="Enter amount..." type="text">
-                    <button style="outline:0;display:inline; width: 142px;padding:0;background-image: url('img/pm/redeem2.png');" class="onHover" onclick="paypal()" id="btn-cards"></button>
+                    <button style="outline:0;display:inline; width: 142px;padding:0;" class="onHover" onclick="paypal()" id="btn-cards">Buy</button>
                 </div>
-                <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 20px; height:36px; ">
-                    <input class="browser-default valueInput" style="text-align:center;font-size:17px;width:140px;"  id="paypal-code" placeholder="Enter code..." type="text">
-                    <button style="outline:0;display:inline; width: 142px;padding:0;background-image: url('img/pm/redeem2.png');" class="onHover" onclick="paypal()" id="btn-cards"></button>
-                </div>
+                
             </div>
             <div id="test5" style="text-align: center;">
                 <span class="apm">AVAILABLE PAYMENT METHODS:</span>
@@ -115,10 +112,9 @@ let changePic = (element)=>{
 
 let paypal = () => {
     let amount = document.getElementById("paypal-amount").value
-    let code = document.getElementById("paypal-code").value
 
     if(amount && amount >= 5) 
-        openInNewTab(`paypal?amount=${amount}&code=${code}`)
+        openInNewTab(`paypal?amount=${amount}`)
     else 
       M.toast({html: 'Minimal deposit is 5$'})
 }
@@ -172,13 +168,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .onHover {
-    background-size: 100% 100%;
-    border:0;
-    font-size:17px;
+       background-size: 100% 100%;
+    /* border: 0; */
+    font-size: 18px;
     font-weight: 650;
-    border-top-right-radius: 7px;
+    /* border-top-right-radius: 7px; */
     border-bottom-right-radius: 7px;
     height: 100%;
+    color: lightslategray;
 }
 
 .onHover:hover{

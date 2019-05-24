@@ -30,13 +30,13 @@ module.exports = {
         if(ban) return res.redirect('/')
 
         let amount = req.query.amount
-        let code = req.query.code
+        let affiliate = null
+     /*   let code = req.query.code
         let affiliate = null
         if(code) {
           affiliate = await models.user.findOne({where: {code: code}})
-        }
-        console.log("amount:"+amount);
-        console.log('affiliate:'+affiliate)
+        } */
+       
         /*
         const create_payment_json = {
           "intent": "sale",

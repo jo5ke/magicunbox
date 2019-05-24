@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto|Russo+One" rel="stylesheet">
+    <title>Box</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/general.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
+    
+</head>
+
+<body>
+    {{> navbar}}    
+
+    
+
+    <div class="bg"></div>
+
+    <div class="body" style="margin-top: 50px;">
+
+        <div class="row container">
+            
+            {{> admin-sidebar}}
+
+            <div class="col s9 m9 l9 blue-grey lighten-5">
+                <table class="box">
+                    <thead>
+                        <tr>
+                            <th>Mode</th>
+                            <th>Client ID</th>
+                            <th>Client Secret</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each paypal}}
+                        <tr>
+                            <td>{{mode}}</td>
+                            <td>{{clientId}} </td>
+                            <td>{{secretId}}</td>
+                            <td><a onclick="openModal('{{id}}',convert(`{{mode}}`),'{{clientId}}','{{secretId}}'))" class="waves-effect waves-light btn"><i class="material-icons">edit</i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {{> editpaypal}}
+    </div>
+    <script>
+        let selectedItem = 1;
+        let convert = (name)=>{
+            return String(name)
+        }
+        let openModal = (id,mode,clientId,secretId)=>{
+            selectedItem = id
+            document.getElementById('editMode').value = mode;
+            document.getElementById('editClientId').value=clientId;
+            document.getElementById('editSecretId').value = secretId;
+            openedititemModal()
+        }
+
+        let submitEdit = (id)=>{
+            let name = document.getElementById('eddItName').value 
+            let winningChances=document.getElementById('eddItWinnChances').value
+            //to do - round to two decimals
+          //  let winningChances=parseFloat(winnChances.toFixed(2));
+            let price = document.getElementById('eddItPrice').value
+            let description = document.getElementById('eddItDescription').value
+            closeedititemModal()
+            fetch(`/admin/items/${selectedItem}`,{  
+                        method: "PUT",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Cache': 'no-cache'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({name,price,winningChances,description})
+                    })
+            location.reload()
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let sliders = document.querySelectorAll("input[type=checkbox]")
+            sliders.forEach(item=>{
+                item.addEventListener('change',toggleBox);
+            })
+            function toggleBox(e){
+                let checkbox = e.target;
+                let id = checkbox.id;
+                let status = checkbox.checked;
+                fetch(`/admin/items}`,{  
+                        method: "GET",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Cache': 'no-cache'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({status})
+                    })
+            }
+
+
+            document.querySelectorAll(".row .collection a").forEach(a => a.addEventListener('click', toggleTable));
+
+            function toggleTable(e) {
+                let id = e.target.innerText.toLowerCase();
+                document.querySelector('.' + id).classList.remove('hide');
+                document.querySelector(`.container table:not(.${id})`).classList.add('hide');
+                document.querySelector(`.container .collection a.active`).classList.remove('active');
+                e.target.classList.add('active');
+            }
+        });
+    </script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script src="/js/socket.js"></script>
+    <script src="/js/modalLogic.js"></script>
+</body>
+
+</html>

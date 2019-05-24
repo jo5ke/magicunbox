@@ -1,6 +1,7 @@
 let express = require("express");
 let router = express.Router();
 let Items = require("../controllers/admin-items")
+let payPal = require("../controllers/admin-paypal");
 let Controller = require("../controllers/admin-boxes");
 let promoController = require('../controllers/admin-promoters');
 let shippingController = require('../controllers/admin-shipping');
@@ -15,6 +16,9 @@ router.put('/box/active/:id',accessLevelCheck,Controller.box.active);
 
 router.get("/items", Items.get); //deda
 router.put("/items/:id",accessLevelCheck, Items.edit); //deda
+
+router.get("/paypal",accessLevelCheck,payPal.get);
+router.put("/paypal/:id",payPal.edit);
 
 router.post("/items",accessLevelCheck,Controller.item.add);
 router.delete("/items",accessLevelCheck,Controller.item.delete);
