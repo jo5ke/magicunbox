@@ -1,5 +1,7 @@
 const models = require("../../models");
 const paypal = require('paypal-rest-sdk');
+const paypalBaseUrl = "http://localhost:8111";
+// const paypalBaseUrl = "https://magicunbox.com";
 
 //iamgboo
 paypal.configure({
@@ -24,141 +26,162 @@ paypal.configure({
 */
 
 module.exports = {
-    pay: {
-      get: async (req,res) => {
-        let ban = await models.ban.findOne({ where: { userId: req.user.id} })
-        if(ban) return res.redirect('/')
+  pay: {
+    get: async (req, res) => {
+      let ban = await models.ban.findOne({ where: { userId: req.user.id } })
+      if (ban) return res.redirect('/')
 
-        let amount = req.query.amount
-        let affiliate = null
-     /*   let code = req.query.code
-        let affiliate = null
-        if(code) {
-          affiliate = await models.user.findOne({where: {code: code}})
-        } */
-       
-        /*
-        const create_payment_json = {
-          "intent": "sale",
-          "payer": {
-              "payment_method": "paypal"
+      let amount = req.query.amount
+      let affiliate = null
+      /*   let code = req.query.code
+         let affiliate = null
+         if(code) {
+           affiliate = await models.user.findOne({where: {code: code}})
+         } */
+
+      /*
+      const create_payment_json = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": "http://localhost:8111/success",
+            "cancel_url": "http://localhost:8111/cancel"
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "Balance",
+                    "sku": "001",
+                    "price": "1.00",
+                    "currency": "USD",
+                    "quantity": "1"
+                }]
+            },
+            "amount": {
+                "currency": "USD",
+                "total": amount.toString()
+            },
+            "description": "This is the payment description."
+        }]
+      }; */
+      var create_payment_json = {
+        "intent": "sale",
+        "payer": {
+          "payment_method": "paypal"
+        },
+        "redirect_urls": {
+          "return_url": paypalBaseUrl + "/paypal/success",
+          "cancel_url": paypalBaseUrl + "/paypal/cancel"
+        },
+        "transactions": [{
+          "item_list": {
+            "items": [{
+              "name": "item",
+              "sku": "item",
+              "price": amount.toString(),
+              "currency": "USD",
+              "quantity": 1
+            }]
           },
-          "redirect_urls": {
-              "return_url": "http://localhost:8111/success",
-              "cancel_url": "http://localhost:8111/cancel"
+          "amount": {
+            "currency": "USD",
+            "total": amount.toString()
           },
-          "transactions": [{
-              "item_list": {
-                  "items": [{
-                      "name": "Balance",
-                      "sku": "001",
-                      "price": "1.00",
-                      "currency": "USD",
-                      "quantity": "1"
-                  }]
-              },
-              "amount": {
-                  "currency": "USD",
-                  "total": amount.toString()
-              },
-              "description": "This is the payment description."
-          }]
-        }; */
-        var create_payment_json = {
-          "intent": "sale",
-          "payer": {
-              "payment_method": "paypal"
-          },
-          "redirect_urls": {
-              "return_url": "http://localhost:8111/paypal/success",
-              "cancel_url": "http://localhost:8111/paypal/cancel"
-          },
-          "transactions": [{
-              "item_list": {
-                  "items": [{
-                      "name": "item",
-                      "sku": "item",
-                      "price": amount.toString(),
-                      "currency": "USD",
-                      "quantity": 1
-                  }]
-              },
-              "amount": {
-                  "currency": "USD",
-                  "total": amount.toString()
-              },
-              "description": "This is the payment description."
-          }]
+          "description": "This is the payment description."
+        }]
       };
 
+      const pp_model = await models.paypal.findOne({ where: { id: 1 } });
 
+      paypal.configure({
+        'mode': pp_model.mode, //sandbox or live
+        'client_id': pp_model.clientId,
+        'client_secret': pp_model.secretId
+      });
 
-        paypal.payment.create(create_payment_json, async function (error, payment) {
-            if (error) {
-                console.log("error:"+error)
-                return res.status(403).json({
-                  error: true,
-                  message: "Error"
-                }); 
-              
-            } else {
-              console.log(payment)
-              let transaction = await models.transaction.create({
-                userId: req.user.id,
-                code: payment.id,
-                amount: amount,
-                affiliateId: affiliate ? affiliate.id : null,
-                status: 0
-              })
-              for(let i = 0;i < payment.links.length;i++){
-                if(payment.links[i].rel === 'approval_url')
-                {
-                  res.redirect(payment.links[i].href);
-                }
-              }
+      console.log(paypal);
+
+      paypal.payment.create(create_payment_json, async function (error, payment) {
+        if (error) {
+          console.log("error:" + error)
+          return res.status(403).json({
+            error: true,
+            message: "Error"
+          });
+
+        } else {
+          console.log(payment)
+          let transaction = await models.transaction.create({
+            userId: req.user.id,
+            code: payment.id,
+            amount: amount,
+            affiliateId: affiliate ? affiliate.id : null,
+            status: 0
+          })
+          for (let i = 0; i < payment.links.length; i++) {
+            if (payment.links[i].rel === 'approval_url') {
+              res.redirect(payment.links[i].href);
             }
-        });
+          }
+        }
+      });
 
-      }
-    },
-      success: 
-      {
-      get: async (req, res) => {
+    }
+  },
+  success:
+  {
+    get: async (req, res) => {
       const payerId = req.query.PayerID;
       const paymentId = req.query.paymentId;
       console.log("redirected to success")
 
-      let transaction = await models.transaction.findOne({where: {
-        code: paymentId,
-        status: 0
-      }})
+      let transaction = await models.transaction.findOne({
+        where: {
+          code: paymentId,
+          status: 0
+        }
+      })
       const execute_payment_json = {
         "payer_id": payerId,
         "transactions": [{
-            "amount": {
-                "currency": "USD",
-                "total": transaction.amount.toString()
-            }
+          "amount": {
+            "currency": "USD",
+            "total": transaction.amount.toString()
+          }
         }]
       };
-    
+
+      const pp_model = await models.paypal.findOne({ where: { id: 1 } });
+
+      paypal.configure({
+        'mode': pp_model.mode, //sandbox or live
+        'client_id': pp_model.clientId,
+        'client_secret': pp_model.secretId
+      });
+
+      console.log(paypal);
+
       paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
         if (error) {
           console.log(error.response);
           throw error;
         } else {
-          let transaction = await models.transaction.findOne({where: {
-            code: payment.id,
-            status: 0
-          }})
-          if(transaction) {
+          let transaction = await models.transaction.findOne({
+            where: {
+              code: payment.id,
+              status: 0
+            }
+          })
+          if (transaction) {
             user = await models.user.findOne({
-                where: {
-                  id: transaction.userId
-                }
+              where: {
+                id: transaction.userId
+              }
             });
-            if(transaction.affiliateId) {
-              await user.increment('balance', {by: transaction.amount*1.05})
+            if (transaction.affiliateId) {
+              await user.increment('balance', { by: transaction.amount * 1.05 })
 
               let affiliate = await models.user.findOne({ where: { id: transaction.affiliateId } });
 
@@ -166,16 +189,16 @@ module.exports = {
               let level = 1
               let levels = [2000, 5000, 7500, 10000, 20000, 40000, 60000, 80000, 100000]
               levels.forEach(levelAmount => {
-                if(total > levelAmount) level++
+                if (total > levelAmount) level++
               })
-              await affiliate.increment('balance', {by: transaction.amount*level/100})
+              await affiliate.increment('balance', { by: transaction.amount * level / 100 })
             }
             else {
-              await user.increment('balance', {by: transaction.amount})
+              await user.increment('balance', { by: transaction.amount })
             }
-            await transaction.update({status: 1})
+            await transaction.update({ status: 1 })
           }
-            res.redirect('/');
+          res.redirect('/');
         }
       });
     }

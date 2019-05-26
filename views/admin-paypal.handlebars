@@ -23,20 +23,20 @@
     <link rel="stylesheet" type="text/css" href="/css/navbar.css">
 
     <link rel="stylesheet" type="text/css" href="/css/admin-panel.css">
-    
+
 </head>
 
 <body>
-    {{> navbar}}    
+    {{> navbar}}
 
-    
+
 
     <div class="bg"></div>
 
     <div class="body" style="margin-top: 50px;">
 
         <div class="row container">
-            
+
             {{> admin-sidebar}}
 
             <div class="col s9 m9 l9 blue-grey lighten-5">
@@ -49,73 +49,73 @@
                         </tr>
                     </thead>
                     <tbody>
-                       {{#each paypal}}
+                        {{#each paypal}}
                         <tr>
                             <td>{{mode}}</td>
                             <td>{{clientId}} </td>
                             <td>{{secretId}}</td>
-                            <td><a onclick="openModal('{{id}}',convert(`{{mode}}`),'{{clientId}}','{{secretId}}'))" class="waves-effect waves-light btn"><i class="material-icons">edit</i></a></td>
+                            <td><a onclick="openModal('{{id}}',convert(`{{mode}}`), convert(`{{clientId}}`),convert(`{{secretId}}`))"
+                                    class="waves-effect waves-light btn"><i class="material-icons">edit</i></a></td>
                         </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
-    {{> editpaypal}}
+        {{> editpaypal}}
     </div>
     <script>
         let selectedItem = 1;
-        let convert = (name)=>{
+        let convert = (name) => {
             return String(name)
         }
-        let openModal = (id,mode,clientId,secretId)=>{
+        let openModal = (id, mode, clientId, secretId) => {
             selectedItem = id
             document.getElementById('editMode').value = mode;
-            document.getElementById('editClientId').value=clientId;
+            document.getElementById('editClientId').value = clientId;
             document.getElementById('editSecretId').value = secretId;
             openedititemModal()
         }
 
-        let submitEdit = (id)=>{
-            let name = document.getElementById('eddItName').value 
-            let winningChances=document.getElementById('eddItWinnChances').value
+        let submitEdit = (id) => {
+            let name = document.getElementById('eddItName').value
             //to do - round to two decimals
-          //  let winningChances=parseFloat(winnChances.toFixed(2));
+            //  let winningChances=parseFloat(winnChances.toFixed(2));
             let price = document.getElementById('eddItPrice').value
             let description = document.getElementById('eddItDescription').value
             closeedititemModal()
-            fetch(`/admin/items/${selectedItem}`,{  
-                        method: "PUT",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Cache': 'no-cache'
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({name,price,winningChances,description})
-                    })
+            fetch(`/admin/items/${selectedItem}`, {
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ name, price, winningChances, description })
+            })
             location.reload()
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let sliders = document.querySelectorAll("input[type=checkbox]")
-            sliders.forEach(item=>{
-                item.addEventListener('change',toggleBox);
+            sliders.forEach(item => {
+                item.addEventListener('change', toggleBox);
             })
-            function toggleBox(e){
+            function toggleBox(e) {
                 let checkbox = e.target;
                 let id = checkbox.id;
                 let status = checkbox.checked;
-                fetch(`/admin/items}`,{  
-                        method: "GET",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Cache': 'no-cache'
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({status})
-                    })
+                fetch(`/admin/items}`, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Cache': 'no-cache'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ status })
+                })
             }
 
 
