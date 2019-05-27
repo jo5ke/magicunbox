@@ -3,18 +3,25 @@
 <div class="row" style="margin : 20px;">
     <form class="col s12">
       <div class="row">
-        <div class="input-field col s9">
-          <input placeholder="Mode" id="editMode" type="text" class="validate">
-          <label>Mode</label>
-        </div>
         <div class="input-field col s3">
+          <label>Mode</label>
+          <input placeholder="Mode" id="editMode" type="text" class="validate"> 
+            <!--  <select id="selectMode" name="selectModeName" >
+                <option value="sandbox">Sandbox</option>
+                <option value="live">Live</option>
+              </select> -->
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
           <input id="editClientId" placeholder="Client ID" type="text" class="validate">
           <label>Client ID</label>
         </div>
       </div>
       <div class="row">
         
-        <div class="input-field col s3">
+        <div class="input-field col s12">
           <input id="editSecretId" placeholder="Secret ID" type="text" class="validate">
           <label>Secret ID</label>
         </div>

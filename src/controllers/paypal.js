@@ -4,11 +4,7 @@ const paypalBaseUrl = "http://localhost:8111";
 // const paypalBaseUrl = "https://magicunbox.com";
 
 //iamgboo
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'ASEBOx4aKR8ml2_K6t1L8tsV1rOgMIDsFrawfJvZYQxhKBv--hCnLFl7xVkuO95PFrcBt_T9tN-HVVCs',
-  'client_secret': 'EIdgI6TsPcI7FQBTM_yCP7QZbTN_FKPXjEXq6g2QcuWAb9-CHuIFxEInS-RNH8S519gC1qr2znkTDx0V'
-});
+
 
 //gunboxceo
 /*
@@ -28,6 +24,13 @@ paypal.configure({
 module.exports = {
   pay: {
     get: async (req, res) => {
+      const pp_model = await models.paypal.findOne({ where: { id: 1 } });
+
+      paypal.configure({
+     'mode': pp_model.mode, //sandbox or live
+     'client_id': pp_model.clientId,
+     'client_secret': pp_model.secretId
+      });
       let ban = await models.ban.findOne({ where: { userId: req.user.id } })
       if (ban) return res.redirect('/')
 
@@ -93,13 +96,9 @@ module.exports = {
         }]
       };
 
-      const pp_model = await models.paypal.findOne({ where: { id: 1 } });
+      
 
-      paypal.configure({
-        'mode': pp_model.mode, //sandbox or live
-        'client_id': pp_model.clientId,
-        'client_secret': pp_model.secretId
-      });
+    
 
       console.log(paypal);
 
@@ -153,13 +152,6 @@ module.exports = {
         }]
       };
 
-      const pp_model = await models.paypal.findOne({ where: { id: 1 } });
-
-      paypal.configure({
-        'mode': pp_model.mode, //sandbox or live
-        'client_id': pp_model.clientId,
-        'client_secret': pp_model.secretId
-      });
 
       console.log(paypal);
 

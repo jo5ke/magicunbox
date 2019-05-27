@@ -50,12 +50,21 @@ module.exports = {
               item.onPromotion = false;
           }       
         })
-        
+        var paypalAllowed = false;
         promoters = await models.promoter.findAll()
+        paypal = await models.paypal.findOne({where:{id:1}});
+        console.log("paypal mode"+paypal.mode);
+        console.log("paypal clientId"+paypal.clientId);
+        console.log("paypal secretId"+paypal.secretId);
+        if(paypal.mode && paypal.clientId && paypal.secretId)
+        {
+           paypalAllowed = true;
+        }
+        console.log("paypalAllowed"+paypalAllowed);
         registeredUsers = await models.user.count()
         registeredUsers += 11352
         dropsCount = 21347 + await models.inventory.count()
-        return res.render("homepage", { user, boxes, drops, promoters, registeredUsers, dropsCount});
+        return res.render("homepage", { user,paypalAllowed, boxes, drops, promoters, registeredUsers, dropsCount});
     }
   },
   profileSlug: {

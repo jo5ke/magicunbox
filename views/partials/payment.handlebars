@@ -1,4 +1,4 @@
-<div  class="modal transparent" style="border:0 !important" id="payment">
+<div class="modal transparent" style="border:0 !important" id="payment">
             <div width="100%" class="closeModal" onclick="closePaymentModal();">
                 <i style="color:#20A4F3; font-size:30px;" onhover="cursor:pointer" class="material-icons">cancel</i>
             </div>
@@ -6,21 +6,24 @@
             <div class="card transparent" style="margin:0">
             <div class="card-tabs">
             <ul class="tabs tabs-fixed-width tabs-transparent" style="height: 60px;align-items:flex-end; ">
-                <li class="tab roundTabs" style="max-width: calc(100%  /3)"><a style="border-radius:5px;display:inline-block;padding : 0 !important;" href="#test4"><img id="paypalTab" onclick="changePic('paypal')" class="tabImages" src="/img/pm/paypal_inactive.png"></a></li>
-                <li class="tab roundTabs" style="margin: 0 2px ;max-width: calc(100%  /3)"><a class="active" style="padding : 0 !important;border-radius:5px;background-color:#fafafa !important" href="#test5"><img id="giftTab" onclick="changePic('gift')" class="tabImages" style="height:160%;margin-top:-13px;margin-left:0px;" src="/img/pm/gift.png"></a></li>
+                <li class="tab roundTabs" style="max-width: calc(100%  /3)"><a class="active" style="border-radius:5px;display:inline-block;padding : 0 !important;" href="#test4"><img id="paypalTab" onclick="changePic('paypal')" class="tabImages" src="/img/pm/paypal_active.png"></a></li>
+                <li class="tab roundTabs" style="margin: 0 2px ;max-width: calc(100%  /3)"><a style="padding : 0 !important;border-radius:5px;background-color:#fafafa !important" href="#test5"><img id="giftTab" onclick="changePic('gift')" class="tabImages" style="height:160%;margin-top:-13px;margin-left:0px;" src="/img/pm/gift_u.png"></a></li>
                 <li class="tab roundTabs" style="max-width: calc(100%  /3)"><a style="padding : 0 !important;border-radius:5px" href="#test6"><img id="coinbaseTab" onclick="changePic('coinbase')" class="tabImages" src="/img/pm/coinbase_u.png"></a></li>
             </ul>
             </div>
             <div class="card-content" style="background-color: #fafafa;border-radius: 5px;margin-top:2px; border-radius:5px">
-            <div id="test4" style="text-align: center; display: none;">
-              <!--  <div class="greenBox apm"><i style="font-size:30px; color:#8FCF4C">Curently Not Available!</i></div> -->
+            <div id="test4" style="text-align: center; display: block;" class="active">
+                {{#if paypalAllowed}}
                 <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 20px; height:36px; ">
                     <input class="browser-default valueInput" style="text-align:center;font-size:17px;width:140px;"  id="paypal-amount" placeholder="Enter amount..." type="text">
-                    <button style="outline:0;display:inline; width: 142px;padding:0;" class="onHover" onclick="paypal()" id="btn-cards">Buy</button>
+                    <button style="outline:0;display:inline; width: 142px;padding:0; background-image: url('img/pm/ppaddfunds1.png'); background-size: 190px; background-position:center;" class="onHover" onclick="paypal()" id="btn-cards"></button>
                 </div>
+                {{else}}
+               <div class="greenBox apm"><i style="font-size:30px; color:#8FCF4C">Curently Not Available!</i></div> 
+                {{/if}}
                 
             </div>
-            <div id="test5" style="text-align: center;">
+            <div id="test5" style="text-align: center; display:none;">
                 <span class="apm">AVAILABLE PAYMENT METHODS:</span>
                 <img src="/img/pm/av_cards.png" width="100%" alt="payment-card">
                 <div style="display:flex;flex-direction:row; justify-content:center;margin-top: 20px; height:36px; ">

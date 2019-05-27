@@ -29,8 +29,6 @@
 <body>
     {{> navbar}}
 
-
-
     <div class="bg"></div>
 
     <div class="body" style="margin-top: 50px;">
@@ -51,7 +49,7 @@
                     <tbody>
                         {{#each paypal}}
                         <tr>
-                            <td>{{mode}}</td>
+                            <td> {{mode}} </td>
                             <td>{{clientId}} </td>
                             <td>{{secretId}}</td>
                             <td><a onclick="openModal('{{id}}',convert(`{{mode}}`), convert(`{{clientId}}`),convert(`{{secretId}}`))"
@@ -71,20 +69,25 @@
         }
         let openModal = (id, mode, clientId, secretId) => {
             selectedItem = id
-            document.getElementById('editMode').value = mode;
+            document.getElementById("editMode").value = mode;
+        /*    let selectMode =document.getElementById('selectMode');
+            selectMode.childNodes.forEach((item,index)=>{
+                if(mode === item.value)
+                {
+                    item.selected = true;
+                }
+            }) */
             document.getElementById('editClientId').value = clientId;
             document.getElementById('editSecretId').value = secretId;
             openedititemModal()
         }
 
         let submitEdit = (id) => {
-            let name = document.getElementById('eddItName').value
-            //to do - round to two decimals
-            //  let winningChances=parseFloat(winnChances.toFixed(2));
-            let price = document.getElementById('eddItPrice').value
-            let description = document.getElementById('eddItDescription').value
+            let mode = document.getElementById('editMode').value   
+            let clientId = document.getElementById('editClientId').value
+            let secretId = document.getElementById('editSecretId').value
             closeedititemModal()
-            fetch(`/admin/items/${selectedItem}`, {
+            fetch(`/admin/paypal/${selectedItem}`, {
                 method: "PUT",
                 headers: {
                     'Accept': 'application/json',
@@ -92,7 +95,7 @@
                     'Cache': 'no-cache'
                 },
                 credentials: 'include',
-                body: JSON.stringify({ name, price, winningChances, description })
+                body: JSON.stringify({ mode, clientId, secretId})
             })
             location.reload()
         }
