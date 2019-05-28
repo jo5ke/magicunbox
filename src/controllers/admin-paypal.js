@@ -13,7 +13,9 @@ module.exports =
     async edit(req,res)
     {
         let id = parseInt(req.params.id);
-        await models.paypal.update(req.body,{where:id});
+        console.log("body of paypal:"+req.body);
+        console.log("Mode of paypal:"+req.body.mode);
+        await models.paypal.update({mode:req.body.mode,clientId:req.body.clientId,secretId:req.body.secretId},{where:{id}});
 
     }
 }
