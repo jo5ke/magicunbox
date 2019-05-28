@@ -3,7 +3,6 @@
     <a href="/admin/" class="collection-item">Box</a>
     <a href="/admin/promoters" class="collection-item">Promoters</a>
     <a href="/admin/shipping?type=requested" class="collection-item">Shipping</a>
-    <a href="/admin/paypal" class="collection-item">Pay Pal</a>
     <a href="/admin/shipping?type=requested" class="collection-item green lighten-5" id="req">
         <i class="material-icons left">done</i>
         Requested
@@ -13,13 +12,14 @@
         Completed
     </a>
     <a href="/admin/users" class="collection-item">Users</a>
+    <a href="/admin/paypal" class="collection-item">Pay Pal</a>
 </div>
 <script>
     let sidenav = document.getElementById("admin-sidenav");
     let sidenavChildrens = [...sidenav.children];
     console.log(sidenavChildrens);
-    sidenavChildrens.forEach(a=>{
-        if(a.href === window.location.origin + window.location.pathname){
+    sidenavChildrens.forEach(a => {
+        if (a.href === window.location.origin + window.location.pathname) {
             a.classList.add('active');
         }
     })
